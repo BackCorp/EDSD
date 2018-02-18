@@ -3,12 +3,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.techprimers.security</groupId>
-	<artifactId>security-db-example</artifactId>
+	<groupId>com.edsd</groupId>
+	<artifactId>edsd</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>security-db-example</name>
+	<name>edsd</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
@@ -48,6 +48,16 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-devtools</artifactId>
+	 	</dependency>
+		<dependency>
+		    <groupId>org.flywaydb</groupId>
+		    <artifactId>flyway-core</artifactId>
+		    <version>5.0.7</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -56,8 +66,20 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+		    	<groupId>org.flywaydb</groupId>
+		    	<artifactId>flyway-maven-plugin</artifactId>
+		    	<version>5.0.7</version>
+			    <configuration>
+    				<url>jdbc:mysql://localhost:3306/edsd?useSSL=false</url>
+			        <user>admin</user>
+			        <password>Project007</password>
+			        <schemas>
+			            <schema>edsd</schema>
+			        </schemas>
+			    </configuration>
+			</plugin>
 		</plugins>
 	</build>
-
 
 </project>
