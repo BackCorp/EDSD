@@ -1,4 +1,4 @@
-package com.techprimers.security.securitydbexample;
+package com.edsd.test;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
