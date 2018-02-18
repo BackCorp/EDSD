@@ -28,7 +28,7 @@ CREATE TABLE `user` (
   `email` varchar(100) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(100) NOT NULL,
-  `mid_name` varchar(100) NOT NULL,
+  `mid_name` varchar(100),
   `password` varchar(100) NOT NULL,
   `username` varchar(100) NOT NULL,
   PRIMARY KEY (`user_id`),
