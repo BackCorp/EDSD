@@ -1,9 +1,10 @@
-package com.techprimers.security.securitydbexample.model;
+package com.edsd.model;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "role")
+@Table(name = "role", catalog = "edsd", uniqueConstraints = 
+		@UniqueConstraint(columnNames = { "role_id", "role"}))
 public class Role {
 
     @Id
@@ -11,7 +12,7 @@ public class Role {
     @Column(name = "role_id")
     private int roleId;
 
-    @Column(name = "role")
+    @Column(name = "role", unique = true, nullable = false)
     private String role;
 
     public Role() {

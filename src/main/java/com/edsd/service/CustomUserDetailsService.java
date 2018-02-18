@@ -1,13 +1,14 @@
-package com.techprimers.security.securitydbexample.service;
+package com.edsd.service;
 
-import com.techprimers.security.securitydbexample.model.CustomUserDetails;
-import com.techprimers.security.securitydbexample.model.Users;
-import com.techprimers.security.securitydbexample.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import com.edsd.model.CustomUserDetails;
+import com.edsd.model.User;
+import com.edsd.repository.UsersRepository;
 
 import java.util.Optional;
 
@@ -20,7 +21,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Users> optionalUsers = usersRepository.findByName(username);
+        Optional<User> optionalUsers = usersRepository.findByUsername(username);
 
         optionalUsers
                 .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
