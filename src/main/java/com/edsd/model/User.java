@@ -70,8 +70,9 @@ public class User {
     	this.username =user.getUsername();
     	this.password = user.getPassword();
     	this.email = user.getEmail();
-        this.active = user.getActive();        
+        this.active = true; //user.getActive();        
         this.roles = user.getRoles();
+        user.getRoles().forEach(r -> System.out.println(r.getRole()) );
     }
     
     public int getUserId() {
