@@ -46,10 +46,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll(true)
                 .and()
                 .logout().logoutUrl("/logout");
-        
-     // http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
-     		//http.formLogin().successHandler(authenticationSuccessHandler); 
-     		//http.formLogin().failureHandler(authenticationFailureHandler);
     }
 
     private PasswordEncoder getPasswordEncoder() {
