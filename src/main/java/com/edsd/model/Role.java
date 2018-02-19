@@ -12,7 +12,13 @@ public class Role {
     @Column(name = "role_id")
     private int roleId;
 
-    @Column(name = "role", unique = true, nullable = false)
+    public Role(int roleId, String role) {
+		super();
+		this.roleId = roleId;
+		this.role = role;
+	}
+
+	@Column(name = "role", unique = true, nullable = false)
     private String role;
 
     public Role() {

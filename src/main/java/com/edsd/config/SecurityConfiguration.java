@@ -18,8 +18,9 @@ import com.edsd.service.CustomUserDetailsService;
 @EnableJpaRepositories(basePackageClasses = UsersRepository.class)
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+	
 
-
+	
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
@@ -34,16 +35,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+    	//csrf() .ignoringAntMatchers("/nocsrf","/ignore/startswith/**")
         http.csrf().disable();
-        http.authorizeRequests()
-                .antMatchers("**/secured/**").authenticated()
-                .anyRequest().permitAll()
+        http.authorizeRequests()    
+                .antMatchers("/admin").hasRole("ADMIN")
+                .anyRequest().authenticated()
                 .and()
             .formLogin()
-                .permitAll()
+            	.defaultSuccessUrl("/home")
+                .permitAll(true)
                 .and()
-        	.logout()
-        		.permitAll();
+                .logout().logoutUrl("/logout");
+        
+     // http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
+     		//http.formLogin().successHandler(authenticationSuccessHandler); 
+     		//http.formLogin().failureHandler(authenticationFailureHandler);
     }
 
     private PasswordEncoder getPasswordEncoder() {
