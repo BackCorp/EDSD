@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.edsd.model.Role;
 import com.edsd.model.User;
 import com.edsd.repository.UsersRepository;
 

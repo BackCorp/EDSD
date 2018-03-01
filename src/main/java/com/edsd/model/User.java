@@ -70,11 +70,12 @@ public class User {
     	this.username =user.getUsername();
     	this.password = user.getPassword();
     	this.email = user.getEmail();
-        this.active = true; //user.getActive();        
+        this.active = user.getActive();        
         this.roles = user.getRoles();
         user.getRoles().forEach(r -> System.out.println(r.getRole()) );
     }
     
+
     public int getUserId() {
         return userId;
     }
@@ -115,8 +116,8 @@ public class User {
         this.username = username;
     }
     
-    public String getPassword() {
-        return password;
+    protected String getPassword() {
+        return this.password;
     }
 
     public void setPassword(String password) {
@@ -124,7 +125,7 @@ public class User {
     }
         
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -132,7 +133,7 @@ public class User {
     }
 
     public boolean getActive() {
-        return active;
+        return this.active;
     }
 
     public void setActive(boolean active) {
@@ -140,7 +141,7 @@ public class User {
     }
 
     public Set<Role> getRoles() {
-        return roles;
+        return this.roles;
     }
 
     public void setRoles(Set<Role> roles) {
