@@ -27,6 +27,7 @@ public class User {
     
     @NotBlank
     @Column(name = "first_name", nullable = false)
+    @Size(min=1, max=100)
     private String firstName;
     
     @Column(name = "mid_name", nullable = true)
@@ -40,7 +41,7 @@ public class User {
 	
     @NotBlank
     @Column(name = "password", nullable = false)
-    @Size(min=1, max=100)
+    @Size(min=1, max=60)
     private String password;
     
     @NotBlank
