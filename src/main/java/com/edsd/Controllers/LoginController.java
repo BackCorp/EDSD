@@ -30,9 +30,5 @@ public class LoginController {
     public Principal AuthUser(Principal principal) {
         return principal;
     }
-	
-//	@GetMapping("/user")
-//	public boolean currentUserName(Authentication authentication) {
-//        return authentication.isAuthenticated();
-//    }
+
 }

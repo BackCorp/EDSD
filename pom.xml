@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>edsd</name>
-	<description>Demo project for Spring Boot</description>
+	<description>EDSD</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
