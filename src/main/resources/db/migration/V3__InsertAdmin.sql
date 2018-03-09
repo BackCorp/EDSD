@@ -19,4 +19,6 @@ INSERT INTO `edsd`.`user`
 `email`,
 `active`)
 VALUES
-('Agent','Agent','agent','pagent','agent@edsd.com',2);
+('Agent','Agent','agent','pagent','agent@edsd.com',1);
+
+INSERT INTO `edsd`.`user_role` (`user_id`,`role_id`) VALUES (2,2);

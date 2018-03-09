@@ -49,3 +49,4 @@ VALUES
 ('Melingui','Samba','MN012OP','$2a$10$AMGQA/jjZO9cftUdfBRRxuI1SX9CKZFS7ZaI.uKjisXLuhfzn0A5e','sMelingui@edsd.com',1);
 
 INSERT INTO `edsd`.`user_role` (`user_id`,`role_id`) VALUES (6,2);
+
