@@ -12,9 +12,8 @@ public class Role {
     @Column(name = "role_id")
     private int roleId;
 
-    public Role(int roleId, String role) {
+    public Role(String role) {
 		super();
-		this.roleId = roleId;
 		this.role = role;
 	}
 
@@ -38,5 +37,11 @@ public class Role {
 
     public void setRole(String role) {
         this.role = role;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+    	Role role = (Role)obj;
+    	return this.role.equalsIgnoreCase(role.getRole());
     }
 }

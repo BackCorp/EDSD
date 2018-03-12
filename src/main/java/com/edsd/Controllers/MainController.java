@@ -17,7 +17,7 @@ public class MainController {
     public ArrayList<Role> home() {
 		// just a test
     	ArrayList<Role> arr = new ArrayList<>();
-        arr.add(new Role(1, "AGENT"));
+        arr.add(new Role("AGENT"));
         return arr;
     }
 

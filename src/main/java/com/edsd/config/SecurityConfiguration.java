@@ -62,10 +62,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()    
         		.anyRequest().authenticated()
         		.antMatchers("api/admin/**").hasRole("ADMIN")
-        		.antMatchers("api/agents/*").hasRole("ADMIN")
+        		.antMatchers("api/agents/**").hasRole("ADMIN")
         		.and()
         		.httpBasic()
                 .and()
+                //.csrf().disable()
                 
             .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
                
@@ -75,8 +76,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             	.failureUrl("/api/loginFailure")
                 .permitAll(true)
                 .and()
-            .logout().and()
-        
+            .logout()
+            .and()
             .csrf().csrfTokenRepository(csrfTokenRepository("X-XSRF-TOKEN"));    
     }
 
