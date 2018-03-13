@@ -28,10 +28,8 @@ public class LoginController {
     }
 	
 	@GetMapping("/user")
-    public User AuthUser(Principal principal) {
-        User user = ((User)principal);
-        user.setPassword("");
-        return user;
+    public Principal AuthUser(Principal principal) {
+        return principal;
     }
 
 }
