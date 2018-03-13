@@ -88,7 +88,10 @@ public class AgentController {
 		}
 		if(!userToBeUpdated.getMidName().trim().equals(userModel.getMidName().trim())) {
 			userToBeUpdated.setMidName(userModel.getMidName());
-		} 		
+		} 	
+		if(userToBeUpdated.getActive() != userModel.getActive()) {
+			userToBeUpdated.setActive(userModel.getActive());
+		}
 		if(userToBeUpdated.getRoles().size() < userModel.getRoles().size()) {
 			userToBeUpdated = getUpdatedRoles(userToBeUpdated, userModel);
 		}
