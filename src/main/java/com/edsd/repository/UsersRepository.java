@@ -29,7 +29,8 @@ public interface UsersRepository extends JpaRepository<User, Integer>, CrudRepos
 	@Transactional(readOnly = true)
 	public List<User> findAll();
 	
-	//public <S> S save(User user);
+	//public User save(User user);
+	
 	
 }
 

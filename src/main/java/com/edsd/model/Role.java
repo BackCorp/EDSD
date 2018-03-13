@@ -1,5 +1,7 @@
 package com.edsd.model;
 
+import java.util.Set;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,14 +13,18 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "role_id")
     private int roleId;
-
-    public Role(String role) {
-		super();
-		this.role = role;
-	}
+    
+//    @ManyToMany(mappedBy = "roles")
+//    private Set<User> users;
 
 	@Column(name = "role", unique = true, nullable = false)
     private String role;
+	
+	
+	public Role(String role) {
+		super();
+		this.role = role;
+	}
 
     public Role() {
     }
@@ -39,9 +45,19 @@ public class Role {
         this.role = role;
     }
     
+    
+//    public Set<User> getUser() {
+//        return this.users;
+//    }
+    
     @Override
     public boolean equals(Object obj) {
     	Role role = (Role)obj;
     	return this.role.equalsIgnoreCase(role.getRole());
     }
+
+	@Override
+	public String toString() {
+		return "Role [roleId=" + roleId + ", role=" + role + "]";
+	}
 }
