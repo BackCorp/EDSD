@@ -49,15 +49,15 @@ public class User {
     @Size(min=1, max=100)
     private String email;
     
-    @NotBlank
-    @Column(name = "active", columnDefinition="TINYINT(1) default 1")
-    @Type(type = "org.hibernate.type.NumericBooleanType")
+   // @NotBlank
+    @Column(name = "active", columnDefinition= "BOOLEAN DEFAULT true") // "TINYINT(1) default 1")
+    //@Type(type = "org.hibernate.type.NumericBooleanType")
     @NotNull(message="User must be Enabled or Disabled")
     private boolean active;
     
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), 
-    	inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"), 
+    	inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
     private Set<Role> roles;
 
     public User() {
@@ -117,7 +117,7 @@ public class User {
         this.username = username;
     }
     
-    protected String getPassword() {
+    public String getPassword() {
         return this.password;
     }
 
@@ -148,4 +148,10 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", lastName=" + lastName + ", firstName=" + firstName + ", midName=" + midName
+				+ ", username=" + username + ", email=" + email + ", active=" + active + ", roles=" + roles + "]";
+	}
 }

@@ -12,7 +12,7 @@ import com.edsd.model.User;
 import com.edsd.repository.UsersRepository;
 
 
-
+@PreAuthorize("hasAnyRole('ADMIN')")
 @RequestMapping("/api/admin")
 @RestController
 public class AdminController {
@@ -25,9 +25,5 @@ public class AdminController {
         return "Admin page";
     }
 	
-	@PreAuthorize("hasAnyRole('ADMIN')")
-	@GetMapping("/users/{username}")
-	public User findByUsername(@PathVariable("username") String username) {
-	    return usersRepo.findByUsername(username).get();
-	}
+	
 }

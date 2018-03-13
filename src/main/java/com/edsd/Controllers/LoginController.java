@@ -3,11 +3,12 @@ package com.edsd.Controllers;
 
 import java.security.Principal;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.edsd.model.User;
 
 
 @RequestMapping("/api/login")
@@ -27,8 +28,10 @@ public class LoginController {
     }
 	
 	@GetMapping("/user")
-    public Principal AuthUser(Principal principal) {
-        return principal;
+    public User AuthUser(Principal principal) {
+        User user = ((User)principal);
+        user.setPassword("");
+        return user;
     }
 
 }
