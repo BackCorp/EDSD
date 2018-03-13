@@ -14,8 +14,6 @@ public class Role {
     @Column(name = "role_id")
     private int roleId;
     
-//    @ManyToMany(mappedBy = "roles")
-//    private Set<User> users;
 
 	@Column(name = "role", unique = true, nullable = false)
     private String role;
@@ -45,10 +43,6 @@ public class Role {
         this.role = role;
     }
     
-    
-//    public Set<User> getUser() {
-//        return this.users;
-//    }
     
     @Override
     public boolean equals(Object obj) {
