@@ -21,10 +21,15 @@ public interface UsersRepository extends JpaRepository<User, Integer>, CrudRepos
 	    
 	public Optional<User> findByUsername(String username);
 	
-	public Optional<User> findByUsernameAndActiveTrue(String username);
+	public Optional<User> findByUsernameIgnoreCase(String username);
+	
+	public Optional<User> findByUsernameAndActiveFalseIgnoreCase(String username);
 	
 	@Transactional(readOnly = true)
-	public List<User> findTop10ByUsernameLikeOrFirstNameLikeOrLastNameLikeIgnoreCase(String username, String firstName, String lastName);
+	public List<User> findTop10ByUsernameLikeAndActiveTrueOrFirstNameLikeAndActiveTrueOrLastNameLikeAndActiveTrueIgnoreCase(String username, String firstName, String lastName);
+	
+	@Transactional(readOnly = true)
+	public List<User> findTop10ByUsernameLikeAndActiveFalseOrFirstNameLikeAndActiveFalseOrLastNameLikeAndActiveFalseIgnoreCase(String username, String firstName, String lastName);
 	
 	@Transactional(readOnly = true)
 	public List<User> findAll();

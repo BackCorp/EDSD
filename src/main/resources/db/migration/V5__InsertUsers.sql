@@ -59,7 +59,7 @@ INSERT INTO `edsd`.`user`
 `email`,
 `active`)
 VALUES
-('Etoundi','Charles','UV678WX','$2a$10$AMGQA/jjZO9cftUdfBRRxuI1SX9CKZFS7ZaI.uKjisXLuhfzn0A5e','cEtoundi@edsd.com',1);
+('Etoundi','Charles','UV678WX','$2a$10$AMGQA/jjZO9cftUdfBRRxuI1SX9CKZFS7ZaI.uKjisXLuhfzn0A5e','cEtoundi@edsd.com',0);
 
 INSERT INTO `edsd`.`user`
 (`last_name`,
@@ -69,5 +69,5 @@ INSERT INTO `edsd`.`user`
 `email`,
 `active`)
 VALUES
-('Kani','Banda','YZ901AB','$2a$10$AMGQA/jjZO9cftUdfBRRxuI1SX9CKZFS7ZaI.uKjisXLuhfzn0A5e','bKani@edsd.com',1);
+('Kani','Banda','YZ901AB','$2a$10$AMGQA/jjZO9cftUdfBRRxuI1SX9CKZFS7ZaI.uKjisXLuhfzn0A5e','bKani@edsd.com',0);
 
