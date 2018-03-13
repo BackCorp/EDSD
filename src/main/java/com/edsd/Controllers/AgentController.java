@@ -1,19 +1,14 @@
 package com.edsd.Controllers;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,7 +36,16 @@ public class AgentController {
 	
 	@GetMapping("/search/{token}")
 	public List<User> findByUsernameFirstNameLastNameLike(@PathVariable("token") String token) {
-	    List<User> users = usersRepo.findTop10ByUsernameLikeOrFirstNameLikeOrLastNameLikeIgnoreCase("%"+token+"%", "%"+token+"%", "%"+token+"%");
+	    List<User> users = usersRepo.findTop10ByUsernameLikeAndActiveTrueOrFirstNameLikeAndActiveTrueOrLastNameLikeAndActiveTrueIgnoreCase("%"+token+"%", "%"+token+"%", "%"+token+"%");
+	    users.forEach(user -> {
+	    	user.setPassword("");
+	    });
+	    return users;
+	}
+	
+	@GetMapping("/disabled/search/{token}")
+	public List<User> findDisabledByUsernameFirstNameLastNameLike(@PathVariable("token") String token) {
+	    List<User> users = usersRepo.findTop10ByUsernameLikeAndActiveFalseOrFirstNameLikeAndActiveFalseOrLastNameLikeAndActiveFalseIgnoreCase("%"+token+"%", "%"+token+"%", "%"+token+"%");
 	    users.forEach(user -> {
 	    	user.setPassword("");
 	    });
@@ -50,7 +54,7 @@ public class AgentController {
 	
 	@GetMapping("/{username}")
 	public User findAgentByUsername(@PathVariable("username") String username) {
-		Optional<User> user =  usersRepo.findByUsernameAndActiveTrue(username);
+		Optional<User> user =  usersRepo.findByUsernameIgnoreCase(username);
 		if(user.isPresent()) {
 			if(user.get().getRoles().stream().anyMatch(role -> role.getRole().equals("ADMIN"))) {
 				return null;
@@ -66,20 +70,47 @@ public class AgentController {
 	@PutMapping("/{username}")
 	public User UpdateAgentByUsername(@PathVariable("username") String username, @RequestBody User user) {
 		Optional<User> us = usersRepo.findByUsername(user.getUsername());
+		User u = null;
 		if(us.isPresent()) {
-			User u = getUpdatedUser(us.get(), user);
-			usersRepo.save(u).setPassword("");
+			if(us.get().getActive() && user.getActive()) {
+				u = usersRepo.save(getUpdatedUser(us.get(), user));
+				u.setPassword("");
+			} else if(!us.get().getActive() && user.getActive()) {
+				us.get().setActive(true);
+				u = usersRepo.save(us.get());
+				u.setPassword("");
+			} else if(us.get().getActive() && !user.getActive()) {
+				us.get().setActive(false);
+				u = usersRepo.save(us.get());
+				u.setPassword("");
+			}
 			return u;
 		} 
 		return null;
 	}
 	
 	private User getUpdatedUser(User userToBeUpdated, User userModel) {
+		if(userToBeUpdated.getMidName() == null) {
+			userToBeUpdated.setMidName("");
+		}
+		if(userModel.getMidName() == null) {
+			userModel.setMidName("");
+		}
+		
 		if(!userToBeUpdated.getFirstName().trim().equals(userModel.getFirstName().trim())) {
 			userToBeUpdated.setFirstName(userModel.getFirstName()); 
 		} 
 		if(!userToBeUpdated.getLastName().trim().equals(userModel.getLastName().trim())) {
 			userToBeUpdated.setLastName(userModel.getLastName());
+		}
+		if(!userToBeUpdated.getEmail().trim().equals(userModel.getEmail().trim())) {
+			userToBeUpdated.setEmail(userModel.getEmail());
+		}
+		if(!userToBeUpdated.getMidName().trim().equals(userModel.getMidName().trim())) {
+			userToBeUpdated.setMidName(userModel.getMidName());
+		} 	
+		if(userToBeUpdated.getActive() != userModel.getActive()) {
+			userToBeUpdated.setActive(userModel.getActive());
 		}
 		if(userToBeUpdated.getRoles().size() < userModel.getRoles().size()) {
 			userToBeUpdated = getUpdatedRoles(userToBeUpdated, userModel);
@@ -96,4 +127,8 @@ public class AgentController {
 		return userToBeUpdated;
 	}
 	
+	private User getUpdatedDisabledUser(User userToBeUpdated, User userModel) {
+		userToBeUpdated.setActive(userModel.getActive());
+		return userToBeUpdated;
+	}
 }
