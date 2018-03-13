@@ -36,7 +36,16 @@ public class AgentController {
 	
 	@GetMapping("/search/{token}")
 	public List<User> findByUsernameFirstNameLastNameLike(@PathVariable("token") String token) {
-	    List<User> users = usersRepo.findTop10ByUsernameLikeOrFirstNameLikeOrLastNameLikeIgnoreCase("%"+token+"%", "%"+token+"%", "%"+token+"%");
+	    List<User> users = usersRepo.findTop10ByUsernameLikeAndActiveTrueOrFirstNameLikeAndActiveTrueOrLastNameLikeAndActiveTrueIgnoreCase("%"+token+"%", "%"+token+"%", "%"+token+"%");
+	    users.forEach(user -> {
+	    	user.setPassword("");
+	    });
+	    return users;
+	}
+	
+	@GetMapping("/disabled/search/{token}")
+	public List<User> findDisabledByUsernameFirstNameLastNameLike(@PathVariable("token") String token) {
+	    List<User> users = usersRepo.findTop10ByUsernameLikeAndActiveFalseOrFirstNameLikeAndActiveFalseOrLastNameLikeAndActiveFalseIgnoreCase("%"+token+"%", "%"+token+"%", "%"+token+"%");
 	    users.forEach(user -> {
 	    	user.setPassword("");
 	    });
@@ -45,7 +54,7 @@ public class AgentController {
 	
 	@GetMapping("/{username}")
 	public User findAgentByUsername(@PathVariable("username") String username) {
-		Optional<User> user =  usersRepo.findByUsernameAndActiveTrue(username);
+		Optional<User> user =  usersRepo.findByUsernameIgnoreCase(username);
 		if(user.isPresent()) {
 			if(user.get().getRoles().stream().anyMatch(role -> role.getRole().equals("ADMIN"))) {
 				return null;
@@ -61,9 +70,20 @@ public class AgentController {
 	@PutMapping("/{username}")
 	public User UpdateAgentByUsername(@PathVariable("username") String username, @RequestBody User user) {
 		Optional<User> us = usersRepo.findByUsername(user.getUsername());
+		User u = null;
 		if(us.isPresent()) {
-			User u = getUpdatedUser(us.get(), user);
-			usersRepo.save(u).setPassword("");
+			if(us.get().getActive() && user.getActive()) {
+				u = usersRepo.save(getUpdatedUser(us.get(), user));
+				u.setPassword("");
+			} else if(!us.get().getActive() && user.getActive()) {
+				us.get().setActive(true);
+				u = usersRepo.save(us.get());
+				u.setPassword("");
+			} else if(us.get().getActive() && !user.getActive()) {
+				us.get().setActive(false);
+				u = usersRepo.save(us.get());
+				u.setPassword("");
+			}
 			return u;
 		} 
 		return null;
@@ -107,4 +127,8 @@ public class AgentController {
 		return userToBeUpdated;
 	}
 	
+	private User getUpdatedDisabledUser(User userToBeUpdated, User userModel) {
+		userToBeUpdated.setActive(userModel.getActive());
+		return userToBeUpdated;
+	}
 }
