@@ -3,6 +3,7 @@ package com.edsd.repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +34,11 @@ public interface UsersRepository extends JpaRepository<User, Integer>, CrudRepos
 	
 	@Transactional(readOnly = true)
 	public List<User> findAll();
-		
+	
+	public long count();
+	
+//	@Query("select u from User u inner join u.role ur where ur.user_id = ")
+	public long countByRolesRoleLike(String role); 
 }
 
 

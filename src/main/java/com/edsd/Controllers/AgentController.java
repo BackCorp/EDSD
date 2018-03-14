@@ -18,6 +18,7 @@ import com.edsd.model.Role;
 import com.edsd.model.User;
 import com.edsd.repository.RolesRepository;
 import com.edsd.repository.UsersRepository;
+import com.edsd.service.StatsService;
 
 @PreAuthorize("hasAnyRole('ADMIN')")
 @RequestMapping("/api/agents")
@@ -28,6 +29,8 @@ public class AgentController {
 	private UsersRepository usersRepo;
 	@Autowired
 	private RolesRepository rolesRepo;
+	@Autowired
+	private StatsService statsService;
 	
 	@GetMapping("")
 	public List<User> findAllAgents() {
@@ -131,4 +134,13 @@ public class AgentController {
 		userToBeUpdated.setActive(userModel.getActive());
 		return userToBeUpdated;
 	}
+	
+	
 }
+
+
+//@CreatedBy
+//private User user;
+//
+//@CreatedDate
+//private DateTime createdDate;
