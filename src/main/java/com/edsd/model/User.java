@@ -49,7 +49,7 @@ public class User {
     @Size(min=1, max=100)
     private String email;
     
-   // @NotBlank
+    @NotBlank
     @Column(name = "active", columnDefinition= "BOOLEAN DEFAULT true") // "TINYINT(1) default 1")
     //@Type(type = "org.hibernate.type.NumericBooleanType")
     @NotNull(message="User must be Enabled or Disabled")
@@ -73,7 +73,6 @@ public class User {
     	this.email = user.getEmail();
         this.active = user.getActive();        
         this.roles = user.getRoles();
-        user.getRoles().forEach(r -> System.out.println(r.getRole()) );
     }
     
 
