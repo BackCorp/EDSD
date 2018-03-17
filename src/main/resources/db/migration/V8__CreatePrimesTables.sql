@@ -110,3 +110,8 @@ UNLOCK TABLES;
 
 -- Dump completed on 2018-03-17 14:35:40
 
+ALTER TABLE `edsd`.`primes_liees_au_grade_ou_categorie` 
+COLLATE = utf8_unicode_ci ;
+
+ALTER TABLE `edsd`.`primes_liees_aux_indices` 
+COLLATE = utf8_unicode_ci ;

@@ -87,7 +87,7 @@ INSERT INTO `edsd`.`primes_liees_au_grade_ou_categorie`
 `indemnite`,
 `montant`,
 `observations`)
-VALUES ('Classe 2','B2','Technicité',5000,"");
+VALUES ('Classe 2','B1','Technicité',5000,"");
 
 INSERT INTO `edsd`.`primes_liees_au_grade_ou_categorie`
 (`classe`,
@@ -95,7 +95,7 @@ INSERT INTO `edsd`.`primes_liees_au_grade_ou_categorie`
 `indemnite`,
 `montant`,
 `observations`)
-VALUES ('Classe 1','B2','Technicité',6000,"");
+VALUES ('Classe 1','B1','Technicité',6000,"");
 
 INSERT INTO `edsd`.`primes_liees_au_grade_ou_categorie`
 (`classe`,
@@ -103,7 +103,7 @@ INSERT INTO `edsd`.`primes_liees_au_grade_ou_categorie`
 `indemnite`,
 `montant`,
 `observations`)
-VALUES ('Classe Exceptionnelle','B2','Technicité',10000,"");
+VALUES ('Classe Exceptionnelle','B1','Technicité',10000,"");
 
 /* ------------------------------------------------------------------------ */
 
