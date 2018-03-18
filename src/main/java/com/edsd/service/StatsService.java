@@ -5,35 +5,37 @@ import org.springframework.stereotype.Component;
 @Component
 public class StatsService {
 	
-	private long userCount;
-	private long adminCount;
-	private long agentCount;
+	private int userCount;
+	private int adminCount;
+	private int agentCount;
+	private int totalRequesters;
 
 
 	public StatsService() {
 		super();
 	}
 	
-	public StatsService(long userCount, long adminCount, long agentCount) {
+	public StatsService(int userCount, int adminCount, int agentCount, int totalRequesters) {
 		super();
 		this.userCount = userCount;
 		this.agentCount = agentCount;
 		this.adminCount = adminCount;
+		this.totalRequesters = totalRequesters;
 	}
 
-	public long getUserCount() {
+	public int getUserCount() {
 		return userCount;
 	}
 
-	public void setUserCount(long userCount) {
+	public void setUserCount(int userCount) {
 		this.userCount = userCount;
 	}
 	
-	public long getAdminCount() {
+	public int getAdminCount() {
 		return adminCount;
 	}
 
-	public void setAdminCount(long adminCount) {
+	public void setAdminCount(int adminCount) {
 		this.adminCount = adminCount;
 	}
 
@@ -41,13 +43,17 @@ public class StatsService {
 		return agentCount;
 	}
 
-	public void setAgentCount(long agentCount) {
+	public void setAgentCount(int agentCount) {
 		this.agentCount = agentCount;
 	}
 	
 	@Override
 	public String toString() {
 		return "Stats [userCount=" + userCount + "]";
+	}
+
+	public void setTotalRequesters(int totalRequesters) {
+		this.totalRequesters = totalRequesters;
 	}
 
 }

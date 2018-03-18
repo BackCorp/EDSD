@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.edsd.model.Role;
+import com.edsd.repository.RequestersRepository;
 import com.edsd.repository.UsersRepository;
 import com.edsd.service.StatsService;
 
@@ -19,6 +20,8 @@ public class MainController {
 	private UsersRepository usersRepo;
 	@Autowired
 	private StatsService statsService;
+	@Autowired
+	private RequestersRepository requesterRepo;
 
 	@GetMapping("/home")
     public ArrayList<Role> home() {
@@ -31,9 +34,10 @@ public class MainController {
 	// in the future, this should return an object containing all the stats
 	@GetMapping("/stats")
 	public StatsService getStats() {
-		statsService.setUserCount(usersRepo.count());
-		statsService.setAgentCount(usersRepo.countByRolesRoleLike("AGENT"));
-		statsService.setAdminCount(usersRepo.countByRolesRoleLike("ADMIN"));
+		statsService.setUserCount((int)usersRepo.count());
+		statsService.setAgentCount((int)usersRepo.countByRolesRoleLike("AGENT"));
+		statsService.setAdminCount((int)usersRepo.countByRolesRoleLike("ADMIN"));
+		statsService.setTotalRequesters((int)requesterRepo.count());
 		return statsService;
 	}
 		
