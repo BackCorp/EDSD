@@ -6,7 +6,9 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.data.annotation.CreatedBy;
 
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
@@ -14,7 +16,7 @@ import java.util.Set;
 @UniqueConstraint(columnNames = {"user_id", "username", "email"}))
 public class User {
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
     @NotNull(message="User ID is required")
@@ -60,7 +62,11 @@ public class User {
     	inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
     private Set<Role> roles;
 
-    public User() {
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="createdBy")
+    private Set<PrimesEdsd> primesEdsd;
+    
+
+	public User() {
     }
 
     public User(User user) {
@@ -148,6 +154,14 @@ public class User {
         this.roles = roles;
     }
 
+    public Set<PrimesEdsd> getPrimesEdsd() {
+		return primesEdsd;
+	}
+
+	public void setPrimesEdsd(Set<PrimesEdsd> primesEdsd) {
+		this.primesEdsd = primesEdsd;
+	}
+    
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", lastName=" + lastName + ", firstName=" + firstName + ", midName=" + midName

@@ -48,6 +48,10 @@ public class PrimesLieesAuxIndices {
 	private String observations;
 	
 	
+	public PrimesLieesAuxIndices() {
+		
+	}
+	
 	public PrimesLieesAuxIndices(String groupe, String classe, String indemnite, double montant, String observations) {
 		super();
 		this.groupe = groupe;
@@ -87,6 +91,12 @@ public class PrimesLieesAuxIndices {
 	}
 	public void setObservations(String observations) {
 		this.observations = observations;
+	}
+
+	@Override
+	public String toString() {
+		return "PrimesLieesAuxIndices [id=" + id + ", groupe=" + groupe + ", classe=" + classe + ", indemnite="
+				+ indemnite + ", montant=" + montant + ", observations=" + observations + "]";
 	}
 	
 }

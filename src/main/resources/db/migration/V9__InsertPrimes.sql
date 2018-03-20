@@ -113,7 +113,7 @@ INSERT INTO `edsd`.`primes_liees_aux_indices`
 `indemnite`,
 `montant`,
 `observations`)
-VALUES('Indice inférieur à 196','IV','Santé publique',10000,"");
+VALUES('Indice inferieur a 196','IV','Santé publique',10000,"");
 
 INSERT INTO `edsd`.`primes_liees_aux_indices`
 (`classe`,
@@ -121,7 +121,7 @@ INSERT INTO `edsd`.`primes_liees_aux_indices`
 `indemnite`,
 `montant`,
 `observations`)
-VALUES('Indice inférieur à 196','IV','Astreinte',6000,"");
+VALUES('Indice inferieur a 196','IV','Astreinte',6000,"");
 
 INSERT INTO `edsd`.`primes_liees_aux_indices`
 (`classe`,
@@ -129,7 +129,7 @@ INSERT INTO `edsd`.`primes_liees_aux_indices`
 `indemnite`,
 `montant`,
 `observations`)
-VALUES('Indice égal ou supérieur à 196 et inférieur à 530','III','Santé publique',15000,"");
+VALUES('egal ou superieur a 196 et inferieur a 530','III','Santé publique',15000,"");
 
 INSERT INTO `edsd`.`primes_liees_aux_indices`
 (`classe`,
@@ -137,7 +137,7 @@ INSERT INTO `edsd`.`primes_liees_aux_indices`
 `indemnite`,
 `montant`,
 `observations`)
-VALUES('Indice égal ou supérieur à 196 et inférieur à 530','III','Astreinte',8000,"");
+VALUES('egal ou superieur a 196 et inferieur a 530','III','Astreinte',8000,"");
 
 INSERT INTO `edsd`.`primes_liees_aux_indices`
 (`classe`,
@@ -145,7 +145,7 @@ INSERT INTO `edsd`.`primes_liees_aux_indices`
 `indemnite`,
 `montant`,
 `observations`)
-VALUES('Indice égal ou supérieur à 530 et inférieur à 870','II','Santé publique',21000,"");
+VALUES('egal ou superieur a 530 et inferieur a 870','II','Santé publique',21000,"");
 
 INSERT INTO `edsd`.`primes_liees_aux_indices`
 (`classe`,
@@ -153,7 +153,7 @@ INSERT INTO `edsd`.`primes_liees_aux_indices`
 `indemnite`,
 `montant`,
 `observations`)
-VALUES('Indice égal ou supérieur à 530 et inférieur à 870','II','Astreinte',10000,"");
+VALUES('egal ou superieur a 530 et inferieur a 870','II','Astreinte',10000,"");
 
 INSERT INTO `edsd`.`primes_liees_aux_indices`
 (`classe`,
@@ -161,7 +161,7 @@ INSERT INTO `edsd`.`primes_liees_aux_indices`
 `indemnite`,
 `montant`,
 `observations`)
-VALUES('Indice égal ou supérieur à 870','I','Santé publique',30000,"");
+VALUES('egal ou superieur a 870','I','Santé publique',30000,"");
 
 INSERT INTO `edsd`.`primes_liees_aux_indices`
 (`classe`,
@@ -169,5 +169,5 @@ INSERT INTO `edsd`.`primes_liees_aux_indices`
 `indemnite`,
 `montant`,
 `observations`)
-VALUES('Indice égal ou supérieur à 870','I','Astreinte',12000,"");
+VALUES('egal ou superieur a 870','I','Astreinte',12000,"");
 

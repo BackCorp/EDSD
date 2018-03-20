@@ -48,10 +48,13 @@ public class PrimesLieesAuGradeOuCategorie {
 	private String observations;
 
 	
-	public PrimesLieesAuGradeOuCategorie(int id, String gradeOuCategorie, String classe, String indemnite,
+	public PrimesLieesAuGradeOuCategorie() {
+		
+	}
+	
+	public PrimesLieesAuGradeOuCategorie(String gradeOuCategorie, String classe, String indemnite,
 			double montant, String observations) {
 		super();
-		this.id = id;
 		this.gradeOuCategorie = gradeOuCategorie;
 		this.classe = classe;
 		this.indemnite = indemnite;
@@ -106,5 +109,13 @@ public class PrimesLieesAuGradeOuCategorie {
 	public void setObservations(String observations) {
 		this.observations = observations;
 	}
+
+	@Override
+	public String toString() {
+		return "PrimesLieesAuGradeOuCategorie [id=" + id + ", gradeOuCategorie=" + gradeOuCategorie + ", classe="
+				+ classe + ", indemnite=" + indemnite + ", montant=" + montant + ", observations=" + observations + "]";
+	}
+	
+	
 	
 }

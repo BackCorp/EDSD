@@ -1,8 +1,9 @@
 package com.edsd.service;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class StatsService {
 	
 	private int userCount;
