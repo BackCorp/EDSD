@@ -17,16 +17,16 @@
 
 --
 -- Table structure for table `primes_edsd`
---
+-- AUTO_INCREMENT
 
 DROP TABLE IF EXISTS `primes_edsd`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `primes_edsd` (
-  `primes_edsd_id` int(11) NOT NULL AUTO_INCREMENT,
+  `primes_edsd_id` int(11) AUTO_INCREMENT NOT NULL,, 
   `classe_liee_au_grade` varchar(100) CHARACTER SET utf8 NOT NULL,
   `classe_liee_aux_indices` varchar(100) CHARACTER SET utf8 NOT NULL,
-  `created_date` tinyblob NOT NULL,
+  `created_date` TIMESTAMP NOT NULL,
   `end_date` date NOT NULL,
   `grade` varchar(100) CHARACTER SET utf8 NOT NULL,
   `groupe` varchar(100) CHARACTER SET utf8 NOT NULL,
@@ -41,6 +41,13 @@ CREATE TABLE `primes_edsd` (
   CONSTRAINT `FK8hdjdm9waefn0x369svcrhryt` FOREIGN KEY (`created_by_user_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `FKs4tpxsx2hhfos18dw6wmeor84` FOREIGN KEY (`requester_id`) REFERENCES `requester` (`requester_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE SEQUENCE `PRIMES_EDSD_SEQ`(
+  INCREMENT 1,
+  MAXVALUE 2000000000,
+  START 1
+ );
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

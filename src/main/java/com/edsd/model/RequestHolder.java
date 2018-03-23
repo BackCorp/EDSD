@@ -10,7 +10,7 @@ public class RequestHolder {
 	private PrimesGrade primesGrade;
 	@Autowired
 	private PrimesIndices primesIndices;
-	
+	private String requesterAccountNumber;
 	
 	public RequestHolder() {
 		
@@ -35,6 +35,12 @@ public class RequestHolder {
 		this.primesIndices = primesIndices;
 	}
 	
+	public String getRequesterAccountNumber() {
+		return requesterAccountNumber;
+	}
 	
+	public void setRequesterAccountNumber(String requesterAccountNumber) {
+		this.requesterAccountNumber = requesterAccountNumber;
+	}
 	
 }

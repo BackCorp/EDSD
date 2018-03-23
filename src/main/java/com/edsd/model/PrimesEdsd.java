@@ -1,9 +1,10 @@
 package com.edsd.model;
 
-import org.joda.time.DateTime;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.Calendar;
 
 import javax.persistence.CascadeType;
@@ -16,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -26,35 +28,37 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
+@Component
 @Table(name = "primes_edsd", catalog = "edsd", uniqueConstraints = 
 @UniqueConstraint(columnNames = {"primes_edsd_id"}))
 public class PrimesEdsd {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "primes_edsd_id")
-    @NotNull(message="User ID is required")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "primes_edsd_id", updatable = false, nullable = false)
+//    @NotNull(message="User ID is required")
 	private int primesEdsdId;
 	
-	@NotBlank
+//	@NotBlank
 	@CreatedDate
-	private DateTime createdDate;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar createdDate;
 	
-	@NotBlank
+//	@NotBlank
 	@NotNull(message="The field created by is required")
-	@CreatedBy
+//	@CreatedBy
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private User createdBy;
 	
-	@NotBlank
+//	@NotBlank
     @Column(name = "start_date", nullable = false)
 	@Temporal(TemporalType.DATE)
-	private Calendar startDate; 
+	private Date startDate; 
 	
-	@NotBlank
+//	@NotBlank
     @Column(name = "end_date", nullable = false)
 	@Temporal(TemporalType.DATE)
-	private Calendar endDate; 
+	private Date endDate; 
 	
 	@NotBlank
     @Column(name = "grade", nullable = false)
@@ -66,10 +70,8 @@ public class PrimesEdsd {
     @Size(min=1, max=100)
     private String classeLieeAuGrade;
 	
-	@NotBlank
-    @Column(name = "indemnite_liee_au_grade", nullable = false)
-    @Size(min=1, max=100)
-    private String indemniteLieeAuGrade;
+    @Column(name = "indemnite_liee_au_grade_technicite", nullable = false)
+    private double indemniteLieeAuGradeTechnicite;
 	
 	@NotBlank
     @Column(name = "groupe", nullable = false)
@@ -81,36 +83,58 @@ public class PrimesEdsd {
     @Size(min=1, max=100)
     private String classeLieeAuxIndices;
 	
-	@NotBlank
-    @Column(name = "indemnite_liee_aux_indices", nullable = false)
-    @Size(min=1, max=100)
-    private String indemniteLieeAuxIndices;
+    @Column(name = "indemnite_liee_aux_indices_astreinte", nullable = false)
+    private double indemniteLieeAuxIndicesAstreinte;
 	
-	@NotBlank
+	@Column(name = "indemnite_liee_aux_indices_sante_publique", nullable = false)
+    private double indemniteLieeAuxIndicesSantePublique;
+	
+//	@NotBlank
 	@OneToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="requester_id", nullable = false)
 	private Requester belongsToRequester;
 	
-	@NotBlank
-	@Column(name = "primes_totales", nullable = false)
-	private double primesTotales;
+	@Column(name = "computed_primes", nullable = false)
+	private double computedPrimes;
+	
+    @Column(name = "number_of_primes_months", nullable = false)
+	private double numberOfPrimesMonths;
+	
+    @Column(name = "computed_primes_grade", nullable = false)
+	private double computedPrimesGrade;
 
-	public PrimesEdsd(DateTime createdDate, User createdBy, Requester belongsToRequester,
-			Calendar startDate, Calendar endDate, String grade, String classeLieeAuGrade, String indemniteLieeAuGrade,
-			String groupe, String classeLieeAuxIndices, String indemniteLieeAuxIndices, double primesTotales) {
+    @Column(name = "computed_primes_indices", nullable = false)
+	private double computedPrimesIndices;
+
+
+    
+	public PrimesEdsd() {}
+	
+	public PrimesEdsd(
+			User createdBy,
+			Requester belongsToRequester, Date startDate, Date endDate, 
+			String grade, String classeLieeAuGrade, double indemniteLieeAuGradeTechnicite,
+			String groupe, String classeLieeAuxIndices, double indemniteLieeAuxIndicesAstreinte, 
+			double indemniteLieeAuxIndicesSantePublique, double computedPrimes, double numberOfPrimesMonths,
+			double computedPrimesGrade, double computedPrimesIndices
+		) {
 		super();
-		this.createdDate = createdDate;
+//		this.createdDate = createdDate;
 		this.createdBy = createdBy;
 		this.belongsToRequester = belongsToRequester;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.grade = grade;
 		this.classeLieeAuGrade = classeLieeAuGrade;
-		this.indemniteLieeAuGrade = indemniteLieeAuGrade;
+		this.indemniteLieeAuGradeTechnicite = indemniteLieeAuGradeTechnicite;
 		this.groupe = groupe;
 		this.classeLieeAuxIndices = classeLieeAuxIndices;
-		this.indemniteLieeAuxIndices = indemniteLieeAuxIndices;
-		this.primesTotales = primesTotales;
+		this.indemniteLieeAuxIndicesAstreinte = indemniteLieeAuxIndicesAstreinte;
+		this.indemniteLieeAuxIndicesSantePublique = indemniteLieeAuxIndicesSantePublique;
+		this.computedPrimes = computedPrimes;
+		this.numberOfPrimesMonths = numberOfPrimesMonths;
+		this.computedPrimesGrade = computedPrimesGrade;
+		this.computedPrimesIndices = computedPrimesIndices;
 	}
 
 	public int getPrimesEdsdId() {
@@ -121,11 +145,11 @@ public class PrimesEdsd {
 		this.primesEdsdId = primesEdsdId;
 	}
 
-	public DateTime getCreatedDate() {
+	public Calendar getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(DateTime createdDate) {
+	public void setCreatedDate(Calendar createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -137,19 +161,19 @@ public class PrimesEdsd {
 		this.belongsToRequester = belongsToRequester;
 	}
 
-	public Calendar getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Calendar startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
-	public Calendar getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Calendar endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 
@@ -169,12 +193,12 @@ public class PrimesEdsd {
 		this.classeLieeAuGrade = classeLieeAuGrade;
 	}
 
-	public String getIndemniteLieeAuGrade() {
-		return indemniteLieeAuGrade;
+	public double getIndemniteLieeAuGradeTechnicite() {
+		return indemniteLieeAuGradeTechnicite;
 	}
 
-	public void setIndemniteLieeAuGrade(String indemniteLieeAuGrade) {
-		this.indemniteLieeAuGrade = indemniteLieeAuGrade;
+	public void setIndemniteLieeAuGrade(double indemniteLieeAuGradeTechnicite) {
+		this.indemniteLieeAuGradeTechnicite = indemniteLieeAuGradeTechnicite;
 	}
 
 	public String getGroupe() {
@@ -193,12 +217,20 @@ public class PrimesEdsd {
 		this.classeLieeAuxIndices = classeLieeAuxIndices;
 	}
 
-	public String getIndemniteLieeAuxIndices() {
-		return indemniteLieeAuxIndices;
+	public double getIndemniteLieeAuxIndicesAstreinte() {
+		return indemniteLieeAuxIndicesAstreinte;
 	}
 
-	public void setIndemniteLieeAuxIndices(String indemniteLieeAuxIndices) {
-		this.indemniteLieeAuxIndices = indemniteLieeAuxIndices;
+	public void setIndemniteLieeAuxIndicesAstreinte(double indemniteLieeAuxIndicesAstreinte) {
+		this.indemniteLieeAuxIndicesAstreinte = indemniteLieeAuxIndicesAstreinte;
+	}
+	
+	public double getIndemniteLieeAuxIndicesSantePublique() {
+		return indemniteLieeAuxIndicesSantePublique;
+	}
+
+	public void setIndemniteLieeAuxIndicesSantePublique(double indemniteLieeAuxIndicesSantePublique) {
+		this.indemniteLieeAuxIndicesSantePublique = indemniteLieeAuxIndicesSantePublique;
 	}
 
 	public User getCreatedBy() {
@@ -209,12 +241,12 @@ public class PrimesEdsd {
 		this.createdBy = createdBy;
 	}
 
-	public double getPrimesTotales() {
-		return primesTotales;
+	public double getComputedPrimes() {
+		return computedPrimes;
 	}
 
-	public void setPrimesTotales(double primesTotales) {
-		this.primesTotales = primesTotales;
+	public void setComputedPrimes(double computedPrimes) {
+		this.computedPrimes = computedPrimes;
 	}
 
 	

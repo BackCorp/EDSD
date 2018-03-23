@@ -1,7 +1,9 @@
 package com.edsd.Controllers;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,7 @@ import com.edsd.model.PrimesIndices;
 import com.edsd.model.PrimesLieesAuGradeOuCategorie;
 import com.edsd.model.PrimesLieesAuxIndices;
 import com.edsd.model.RequestHolder;
+import com.edsd.model.Requester;
 import com.edsd.model.Role;
 import com.edsd.repository.PrimesLieesAuGadeOuCategorieRepository;
 import com.edsd.repository.PrimesLieesAuxIndicesRepository;
@@ -61,21 +64,32 @@ public class MainController {
 	}
 		
     @PostMapping("/primes")
-    public void test(@RequestBody RequestHolder rh) {
-    	PrimesIndices pl = rh.getPrimesIndices();
+    public void test(@RequestBody RequestHolder rh, Principal principal) {
+    	PrimesIndices primesIndices = rh.getPrimesIndices();
+    	PrimesGrade primesGrade = rh.getPrimesGrade();  
+    	Requester requester = null;
+    	Optional<Requester> req = requesterRepo.findByAccountNumber(rh.getRequesterAccountNumber());
+    	if(req.isPresent()) {
+    		requester = req.get();
+    	}
+    	
     	System.out.println("=========================");
+    	edsd.getPrimesEdsd(primesIndices, primesGrade, principal, requester);
 //    	List<PrimesLieesAuxIndices> primesLieesAuxIndices = primesIndicesRepo.findByGroupeAndClasseIgnoreCase(rh.getPrimesIndices().getGroupe().trim(), rh.getPrimesIndices().getClasse().trim());
 //    	System.out.println(rh.getPrimesIndices());
 //    	System.out.println(primesLieesAuxIndices);
 //    	System.out.println(edsd.getComputedPrimesGrade(rh.getPrimesGrade()));
-    	System.out.println(edsd.getComputedPrimes(rh.getPrimesIndices(), rh.getPrimesGrade()));
+//    	System.out.println(edsd.getComputedPrimes(rh.getPrimesIndices(), rh.getPrimesGrade()));
 //    	System.out.println((pl.getEndDate().getTime() - pl.getStartDate().getTime())/(3600*24*1000));
 //    	System.out.println(edsd.getComputedPrimes(rh.getPrimesIndices(), rh.getPrimesGrade()));
 //    	return primesGradeRepo.findByGradeOuCategorieAndClasseIgnoreCase("A1", "Classe 1");
     }
     
     @GetMapping("/primes")
-    public PrimesEdsd getAllPrimesEdsd() {
+    public PrimesEdsd getAllPrimesEdsd(Principal principal) {
+//    	Principal principal = null;
+    	System.out.println("===================");
+		System.out.println(principal.getName());
     	return null;
     }
     

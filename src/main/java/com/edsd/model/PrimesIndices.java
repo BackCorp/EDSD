@@ -10,7 +10,7 @@ public class PrimesIndices {
 	private String classe;
 	private Date startDate;
 	private Date endDate;
-	private String indemnite;
+//	private String indemnite;
 	private String groupe;
 	
 	
@@ -18,12 +18,12 @@ public class PrimesIndices {
 		
 	}
 
-	public PrimesIndices(String classe, Date startDate, Date endDate, String indemnite, String groupe) {
+	public PrimesIndices(String classe, Date startDate, Date endDate, String groupe) {
 		super();
 		this.classe = classe;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.indemnite = indemnite;
+//		this.indemnite = indemnite;
 		this.groupe = groupe;
 	}
 
@@ -51,13 +51,13 @@ public class PrimesIndices {
 		this.endDate = endDate;
 	}
 
-	public String getIndemnite() {
-		return indemnite;
-	}
-
-	public void setIndemnite(String indemnite) {
-		this.indemnite = indemnite;
-	}
+//	public String getIndemnite() {
+//		return indemnite;
+//	}
+//
+//	public void setIndemnite(String indemnite) {
+//		this.indemnite = indemnite;
+//	}
 
 	public String getGroupe() {
 		return groupe;
@@ -70,7 +70,7 @@ public class PrimesIndices {
 	@Override
 	public String toString() {
 		return "PrimesIndices [classe=" + classe + ", startDate=" + startDate + ", endDate=" + endDate + ", indemnite="
-				+ indemnite + ", groupe=" + groupe + "]";
+				+ ", groupe=" + groupe + "]";
 	}
 	
 }

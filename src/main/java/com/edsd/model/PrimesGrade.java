@@ -1,7 +1,6 @@
 package com.edsd.model;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
 
@@ -11,7 +10,7 @@ public class PrimesGrade {
 	private String classe;
 	private Date startDate;
 	private Date endDate;
-	private String indemnite;
+//	private String indemnite;
 	private String grade;
 	
 	
@@ -19,15 +18,14 @@ public class PrimesGrade {
 		
 	}
 	
-	public PrimesGrade(String classe, Date startDate, Date endDate, String indemnite, String grade) {
+	public PrimesGrade(String classe, Date startDate, Date endDate, String grade) {
 		super();
 		this.classe = classe;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.indemnite = indemnite;
+//		this.indemnite = indemnite;
 		this.grade = grade;
 	}
-	
 	
 	public String getClasse() {
 		return classe;
@@ -47,12 +45,12 @@ public class PrimesGrade {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-	public String getIndemnite() {
-		return indemnite;
-	}
-	public void setIndemnite(String indemnite) {
-		this.indemnite = indemnite;
-	}
+//	public String getIndemnite() {
+//		return indemnite;
+//	}
+//	public void setIndemnite(String indemnite) {
+//		this.indemnite = indemnite;
+//	}
 	public String getGrade() {
 		return grade;
 	}
@@ -63,7 +61,7 @@ public class PrimesGrade {
 	@Override
 	public String toString() {
 		return "PrimesGrade [classe=" + classe + ", startDate=" + startDate + ", endDate=" + endDate + ", indemnite="
-				+ indemnite + ", grade=" + grade + "]";
+				+ ", grade=" + grade + "]";
 	}
 	
 	

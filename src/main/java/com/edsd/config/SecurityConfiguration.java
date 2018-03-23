@@ -72,7 +72,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                
             .formLogin()
             	.usernameParameter("username").passwordParameter("password")
-            	.defaultSuccessUrl("/api/home")
+            	.defaultSuccessUrl("/api/edsd/home")
             	.failureUrl("/api/loginFailure")
                 .permitAll(true)
                 .and()
