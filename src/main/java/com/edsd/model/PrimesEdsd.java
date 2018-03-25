@@ -4,6 +4,8 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.util.Date;
 import java.util.Calendar;
 
@@ -16,6 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -30,32 +33,24 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity
 @Component
 @Table(name = "primes_edsd", catalog = "edsd", uniqueConstraints = 
-@UniqueConstraint(columnNames = {"primes_edsd_id"}))
+@UniqueConstraint(columnNames = {"primes_edsd_id", "requester_id"}))
 public class PrimesEdsd {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "primes_edsd_id", updatable = false, nullable = false)
-//    @NotNull(message="User ID is required")
+    @NotNull(message="User ID is required")
 	private int primesEdsdId;
 	
-//	@NotBlank
 	@CreatedDate
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="created_date", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
 	private Calendar createdDate;
 	
-//	@NotBlank
-	@NotNull(message="The field created by is required")
-//	@CreatedBy
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private User createdBy;
-	
-//	@NotBlank
     @Column(name = "start_date", nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date startDate; 
 	
-//	@NotBlank
     @Column(name = "end_date", nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date endDate; 
@@ -89,10 +84,17 @@ public class PrimesEdsd {
 	@Column(name = "indemnite_liee_aux_indices_sante_publique", nullable = false)
     private double indemniteLieeAuxIndicesSantePublique;
 	
-//	@NotBlank
 	@OneToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="requester_id", nullable = false)
 	private Requester belongsToRequester;
+	
+	@NotNull(message="The field created by is required")
+//	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "created_by_user_id")
+	@JsonBackReference 
+	private User createdBy;
 	
 	@Column(name = "computed_primes", nullable = false)
 	private double computedPrimes;
@@ -247,6 +249,34 @@ public class PrimesEdsd {
 
 	public void setComputedPrimes(double computedPrimes) {
 		this.computedPrimes = computedPrimes;
+	}
+
+	public double getNumberOfPrimesMonths() {
+		return numberOfPrimesMonths;
+	}
+
+	public void setNumberOfPrimesMonths(double numberOfPrimesMonths) {
+		this.numberOfPrimesMonths = numberOfPrimesMonths;
+	}
+
+	public double getComputedPrimesGrade() {
+		return computedPrimesGrade;
+	}
+
+	public void setComputedPrimesGrade(double computedPrimesGrade) {
+		this.computedPrimesGrade = computedPrimesGrade;
+	}
+
+	public double getComputedPrimesIndices() {
+		return computedPrimesIndices;
+	}
+
+	public void setComputedPrimesIndices(double computedPrimesIndices) {
+		this.computedPrimesIndices = computedPrimesIndices;
+	}
+
+	public void setIndemniteLieeAuGradeTechnicite(double indemniteLieeAuGradeTechnicite) {
+		this.indemniteLieeAuGradeTechnicite = indemniteLieeAuGradeTechnicite;
 	}
 
 	

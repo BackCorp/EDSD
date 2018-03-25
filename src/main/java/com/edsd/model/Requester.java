@@ -369,7 +369,19 @@ public class Requester implements Serializable {
 	public void setReferenceAppointmentOrAssignment(String referenceAppointmentOrAssignment) {
 		this.referenceAppointmentOrAssignment = referenceAppointmentOrAssignment;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Requester [requesterId=" + requesterId + ", accountNumber=" + accountNumber + ", lastName=" + lastName
+				+ ", firstName=" + firstName + ", region=" + region + ", healthDistrict=" + healthDistrict
+				+ ", structure=" + structure + ", genre=" + genre + ", dob=" + dob + ", placeOfBirth=" + placeOfBirth
+				+ ", status=" + status + ", fieldOfWork=" + fieldOfWork + ", recruitmentDate=" + recruitmentDate
+				+ ", gradeAtRecruitment=" + gradeAtRecruitment + ", currentGrade=" + currentGrade
+				+ ", categoryAtRecruitment=" + categoryAtRecruitment + ", currentCategory=" + currentCategory
+				+ ", currentIndex=" + currentIndex + ", currentSituation=" + currentSituation + ", rankPosition="
+				+ rankPosition + ", occupiedOrganicPosition=" + occupiedOrganicPosition
+				+ ", dateOfAppointmentOrAssignment=" + dateOfAppointmentOrAssignment + ", appointmentType="
+				+ appointmentType + ", referenceAppointmentOrAssignment=" + referenceAppointmentOrAssignment + "]";
+	}
 	
 }

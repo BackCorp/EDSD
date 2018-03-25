@@ -44,6 +44,7 @@ public class Edsd {
 	private double primesIndicesMontant;
 	private double numberOfPrimesMonths;
 	private final double TAX_PERCENTAGE = 5.28/100;
+	private final int HOUR = 3600000;
 	
 	public Edsd() {}
 	
@@ -56,11 +57,13 @@ public class Edsd {
 
 	
 	private void setNumberOfPrimesMonths(PrimesIndices primesIndices) {
-		this.numberOfPrimesMonths = (primesIndices.getEndDate().getTime() - primesIndices.getStartDate().getTime())/(3600*1000*24*30.0);
+		System.out.println(primesIndices.getEndDate().getTime());
+		System.out.println(primesIndices.getStartDate().getTime());
+		this.numberOfPrimesMonths = (primesIndices.getEndDate().getTime() - primesIndices.getStartDate().getTime() + HOUR)/(3600*1000*24*30.0);
 	}
 	
 	private void setNumberOfPrimesMonths(PrimesGrade primesGrade) {
-		this.numberOfPrimesMonths = (primesGrade.getEndDate().getTime() - primesGrade.getStartDate().getTime())/(3600*1000*24*30.0);
+		this.numberOfPrimesMonths = (primesGrade.getEndDate().getTime() - primesGrade.getStartDate().getTime() + HOUR)/(3600*1000*24*30.0);
 	}
 	
 	private double getNumberOfPrimesMonths() {
@@ -111,7 +114,7 @@ public class Edsd {
 		return computedPrimes;
 	}
 	
-	public void getPrimesEdsd(PrimesIndices primesIndices, PrimesGrade primesGrade, Principal principal, Requester requester) {
+	public PrimesEdsd getPrimesEdsd(PrimesIndices primesIndices, PrimesGrade primesGrade, Principal principal, Requester requester) {
 		this.setComputedPrimes(primesIndices, primesGrade);
 		User user = usersRepo.findByUsername(principal.getName()).get();
 		
@@ -122,6 +125,6 @@ public class Edsd {
 			this.primesIndicesSantePubliqueMontant, this.getComputedPrimes(), this.getNumberOfPrimesMonths(),
 			this.getComputedPrimesGrade(primesGrade), this.getComputedPrimesIndices(primesIndices)
 		);
-		primesEdsdRepo.save(primesEdsd);
+		return primesEdsdRepo.save(primesEdsd);
 	}
 }

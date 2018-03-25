@@ -29,8 +29,9 @@ public interface UsersRepository extends JpaRepository<User, Integer>, CrudRepos
 	
 	public long count();
 	
-//	@Query("select u from User u inner join u.role ur where ur.user_id = ")
 	public long countByRolesRoleLike(String role); 
+	
+//	public List<> findBy
 }
 
 

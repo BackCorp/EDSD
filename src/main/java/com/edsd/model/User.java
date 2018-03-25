@@ -8,6 +8,8 @@ import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.annotation.CreatedBy;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.io.Serializable;
 import java.util.Set;
 
@@ -62,7 +64,8 @@ public class User {
     	inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
     private Set<Role> roles;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="createdBy")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="createdBy", orphanRemoval=true)
+	@JsonManagedReference
     private Set<PrimesEdsd> primesEdsd;
     
 
@@ -79,6 +82,7 @@ public class User {
     	this.email = user.getEmail();
         this.active = user.getActive();        
         this.roles = user.getRoles();
+//        this.primesEdsd = user.getPrimesEdsd();
     }
     
 

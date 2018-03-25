@@ -19,4 +19,6 @@ public interface RequestersRepository extends JpaRepository<Requester, Integer>,
 	
 	public Optional<Requester> findByAccountNumber(String accountNumber);
 	
+	public Optional<Requester> findByRequesterId(int id);
+	
 }

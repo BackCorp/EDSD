@@ -17,36 +17,40 @@
 
 --
 -- Table structure for table `primes_edsd`
--- AUTO_INCREMENT
+--
 
 DROP TABLE IF EXISTS `primes_edsd`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `primes_edsd` (
-  `primes_edsd_id` int(11) AUTO_INCREMENT NOT NULL,, 
-  `classe_liee_au_grade` varchar(100) CHARACTER SET utf8 NOT NULL,
-  `classe_liee_aux_indices` varchar(100) CHARACTER SET utf8 NOT NULL,
-  `created_date` TIMESTAMP NOT NULL,
+  `primes_edsd_id` int(11) NOT NULL AUTO_INCREMENT,
+  `classe_liee_au_grade` varchar(100) NOT NULL,
+  `classe_liee_aux_indices` varchar(100) NOT NULL,
+  `computed_primes` double NOT NULL,
+  `computed_primes_grade` double NOT NULL,
+  `computed_primes_indices` double NOT NULL,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `end_date` date NOT NULL,
-  `grade` varchar(100) CHARACTER SET utf8 NOT NULL,
-  `groupe` varchar(100) CHARACTER SET utf8 NOT NULL,
-  `indemnite_liee_au_grade` varchar(100) CHARACTER SET utf8 NOT NULL,
-  `indemnite_liee_aux_indices` varchar(100) CHARACTER SET utf8 NOT NULL,
+  `grade` varchar(100) NOT NULL,
+  `groupe` varchar(100) NOT NULL,
+  `indemnite_liee_au_grade_technicite` double NOT NULL,
+  `indemnite_liee_aux_indices_astreinte` double NOT NULL,
+  `indemnite_liee_aux_indices_sante_publique` double NOT NULL,
+  `number_of_primes_months` double NOT NULL,
   `start_date` date NOT NULL,
   `requester_id` int(11) NOT NULL,
   `created_by_user_id` int(11) NOT NULL,
   PRIMARY KEY (`primes_edsd_id`),
+  UNIQUE KEY `UKb92ohaowa9a8eg6uwlj1f4yuq` (`primes_edsd_id`,`requester_id`),
+  UNIQUE KEY `primes_edsd_id_UNIQUE` (`primes_edsd_id`),
+  UNIQUE KEY `requester_id_UNIQUE` (`requester_id`),
   KEY `FKs4tpxsx2hhfos18dw6wmeor84` (`requester_id`),
   KEY `FK8hdjdm9waefn0x369svcrhryt` (`created_by_user_id`),
   CONSTRAINT `FK8hdjdm9waefn0x369svcrhryt` FOREIGN KEY (`created_by_user_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `FKs4tpxsx2hhfos18dw6wmeor84` FOREIGN KEY (`requester_id`) REFERENCES `requester` (`requester_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE SEQUENCE `PRIMES_EDSD_SEQ`(
-  INCREMENT 1,
-  MAXVALUE 2000000000,
-  START 1
- );
+ALTER TABLE `primes_edsd` AUTO_INCREMENT = 0;
 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -68,4 +72,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-18 20:10:55
+-- Dump completed on 2018-03-23 20:44:14
