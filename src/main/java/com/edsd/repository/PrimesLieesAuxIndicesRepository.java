@@ -11,6 +11,8 @@ import com.edsd.model.Requester;
 
 public interface PrimesLieesAuxIndicesRepository extends JpaRepository<PrimesLieesAuxIndices, Integer>, CrudRepository<PrimesLieesAuxIndices, Integer> {
 
-	public List<PrimesLieesAuxIndices> findByGroupeAndClasseIgnoreCase(String groupe, String classe);
+	public List<PrimesLieesAuxIndices> findByGroupeIgnoreCase(String groupe);
+	
+	public List<PrimesLieesAuxIndices> findByGroupeAndIndemniteLikeIgnoreCase(String groupe, String indemnite);
 	
 }

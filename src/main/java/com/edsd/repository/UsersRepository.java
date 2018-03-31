@@ -31,7 +31,6 @@ public interface UsersRepository extends JpaRepository<User, Integer>, CrudRepos
 	
 	public long countByRolesRoleLike(String role); 
 	
-//	public List<> findBy
 }
 
 

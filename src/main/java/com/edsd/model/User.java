@@ -54,8 +54,7 @@ public class User {
     private String email;
     
     @NotBlank
-    @Column(name = "active", columnDefinition= "BOOLEAN DEFAULT true") // "TINYINT(1) default 1")
-    //@Type(type = "org.hibernate.type.NumericBooleanType")
+    @Column(name = "active", columnDefinition= "BOOLEAN DEFAULT true") 
     @NotNull(message="User must be Enabled or Disabled")
     private boolean active;
     

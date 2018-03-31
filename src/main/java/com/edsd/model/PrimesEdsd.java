@@ -33,7 +33,7 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity
 @Component
 @Table(name = "primes_edsd", catalog = "edsd", uniqueConstraints = 
-@UniqueConstraint(columnNames = {"primes_edsd_id", "requester_id"}))
+@UniqueConstraint(columnNames = {"primes_edsd_id"}))
 public class PrimesEdsd {
 
 	@Id
@@ -42,10 +42,15 @@ public class PrimesEdsd {
     @NotNull(message="User ID is required")
 	private int primesEdsdId;
 	
+	@Column(name = "retenues", nullable = false, columnDefinition="DOUBLE default '0.00'")
+	private double retenues;
+	
 	@CreatedDate
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="created_date", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-	private Calendar createdDate;
+	@Column(name="created_date", 
+		columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP",
+		nullable = false)
+	private Date createdDate;
 	
     @Column(name = "start_date", nullable = false)
 	@Temporal(TemporalType.DATE)
@@ -84,14 +89,12 @@ public class PrimesEdsd {
 	@Column(name = "indemnite_liee_aux_indices_sante_publique", nullable = false)
     private double indemniteLieeAuxIndicesSantePublique;
 	
-	@OneToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="requester_id", nullable = false)
 	private Requester belongsToRequester;
 	
-	@NotNull(message="The field created by is required")
-//	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@ManyToOne(fetch = FetchType.EAGER)
+	@NotNull(message="The field createdby is required")
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "created_by_user_id")
 	@JsonBackReference 
 	private User createdBy;
@@ -99,8 +102,11 @@ public class PrimesEdsd {
 	@Column(name = "computed_primes", nullable = false)
 	private double computedPrimes;
 	
-    @Column(name = "number_of_primes_months", nullable = false)
-	private double numberOfPrimesMonths;
+	@Column(name = "actual_primes", nullable = false)
+	private int actualPrimes;
+	
+    @Column(name = "number_of_months", nullable = false)
+	private double numberOfMonths;
 	
     @Column(name = "computed_primes_grade", nullable = false)
 	private double computedPrimesGrade;
@@ -109,21 +115,18 @@ public class PrimesEdsd {
 	private double computedPrimesIndices;
 
 
-    
 	public PrimesEdsd() {}
 	
+
 	public PrimesEdsd(
-			User createdBy,
-			Requester belongsToRequester, Date startDate, Date endDate, 
-			String grade, String classeLieeAuGrade, double indemniteLieeAuGradeTechnicite,
-			String groupe, String classeLieeAuxIndices, double indemniteLieeAuxIndicesAstreinte, 
-			double indemniteLieeAuxIndicesSantePublique, double computedPrimes, double numberOfPrimesMonths,
-			double computedPrimesGrade, double computedPrimesIndices
-		) {
+			User createdBy, Requester belongsToRequester, Date startDate, 
+			Date endDate, String grade, String classeLieeAuGrade, 
+			double indemniteLieeAuGradeTechnicite, String groupe, String classeLieeAuxIndices,
+			double retenues, double indemniteLieeAuxIndicesAstreinte, 
+			double indemniteLieeAuxIndicesSantePublique, double computedPrimes, int actualPrimes,
+			double numberOfMonths, double computedPrimesGrade, double computedPrimesIndices) {
 		super();
-//		this.createdDate = createdDate;
-		this.createdBy = createdBy;
-		this.belongsToRequester = belongsToRequester;
+		this.retenues = retenues;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.grade = grade;
@@ -133,8 +136,11 @@ public class PrimesEdsd {
 		this.classeLieeAuxIndices = classeLieeAuxIndices;
 		this.indemniteLieeAuxIndicesAstreinte = indemniteLieeAuxIndicesAstreinte;
 		this.indemniteLieeAuxIndicesSantePublique = indemniteLieeAuxIndicesSantePublique;
+		this.belongsToRequester = belongsToRequester;
+		this.createdBy = createdBy;
 		this.computedPrimes = computedPrimes;
-		this.numberOfPrimesMonths = numberOfPrimesMonths;
+		this.actualPrimes = actualPrimes;
+		this.numberOfMonths = numberOfMonths;
 		this.computedPrimesGrade = computedPrimesGrade;
 		this.computedPrimesIndices = computedPrimesIndices;
 	}
@@ -147,11 +153,11 @@ public class PrimesEdsd {
 		this.primesEdsdId = primesEdsdId;
 	}
 
-	public Calendar getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Calendar createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -250,13 +256,26 @@ public class PrimesEdsd {
 	public void setComputedPrimes(double computedPrimes) {
 		this.computedPrimes = computedPrimes;
 	}
-
-	public double getNumberOfPrimesMonths() {
-		return numberOfPrimesMonths;
+	
+	public double getRetenues() {
+		return retenues;
+	}
+	public void setRetenues(double retenues) {
+		this.retenues = retenues;
 	}
 
-	public void setNumberOfPrimesMonths(double numberOfPrimesMonths) {
-		this.numberOfPrimesMonths = numberOfPrimesMonths;
+	public int getActualPrimes() {
+		return actualPrimes;
+	}
+	public void setActualPrimes(int actualPrimes) {
+		this.actualPrimes = actualPrimes;
+	}
+
+	public double getNumberOfMonths() {
+		return numberOfMonths;
+	}
+	public void setNumberOfMonths(double numberOfMonths) {
+		this.numberOfMonths = numberOfMonths;
 	}
 
 	public double getComputedPrimesGrade() {

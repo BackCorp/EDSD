@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.edsd.domain.Edsd;
+import com.edsd.model.NonLogement;
 import com.edsd.model.PrimesEdsd;
 import com.edsd.model.PrimesGrade;
 import com.edsd.model.PrimesIndices;
 import com.edsd.model.PrimesLieesAuGradeOuCategorie;
 import com.edsd.model.PrimesLieesAuxIndices;
+import com.edsd.model.RappelsSalaires;
 import com.edsd.model.RequestHolder;
 import com.edsd.model.Requester;
 import com.edsd.model.Role;
@@ -53,6 +55,8 @@ public class MainController {
 	@Autowired
 	private Edsd edsd;
 	
+	private PrimesEdsd createdPrimesEdsd;
+	
 	@GetMapping("/home")
     public ArrayList<Role> home() {
 		// just a test
@@ -72,21 +76,26 @@ public class MainController {
 	}
 		
     @PostMapping("/primes")
-    public PrimesEdsd createPrimesEdsd(@RequestBody RequestHolder rh, Principal principal) {
-    	PrimesIndices primesIndices = rh.getPrimesIndices();
-    	PrimesGrade primesGrade = rh.getPrimesGrade();  
-    	List<PrimesEdsd> primesEdsds = null;
-    	Requester requester = null;
-    	Optional<Requester> req = requesterRepo.findByAccountNumber(rh.getRequesterAccountNumber());
-    	if(req.isPresent()) {
-    		requester = req.get();
-    		primesEdsds = primesEdsdRepo.findByBelongsToRequester(requester);
-    		if(primesEdsds.isEmpty()) {
-    			return edsd.getPrimesEdsd(primesIndices, primesGrade, principal, requester);
-    		}
-    		return null;
-    	}
-    	return null;
+    public PrimesEdsd createPrimesEdsd(@RequestBody RequestHolder requestHolder, Principal principal) {
+    	  	
+    	usersRepo.findByUsername(principal.getName()).ifPresent(user -> {
+    		System.out.println("===================================");
+    		System.out.println(user);
+    		requesterRepo.findByAccountNumber(requestHolder.getRequesterAccountNumber()).ifPresent(requester -> {
+    			System.out.println(requestHolder.getNonLogement());
+        		if(!(requestHolder.getPrimesGrade() == null || requestHolder.getPrimesIndices() == null)) {
+        			createdPrimesEdsd = edsd.createPrimesEdsd(user, requester, requestHolder.getPrimesIndices(), requestHolder.getPrimesGrade(), requestHolder.getRetenues());
+        		}
+        		if(requestHolder.getNonLogement() != null) {
+        			// create non logement
+        		}
+        		if(requestHolder.getRappelsSalaires() != null) {
+        			// create rappelsSalaires
+        		}
+        	});
+    	});
+
+    	return createdPrimesEdsd;
     }
     
     @GetMapping("/test")

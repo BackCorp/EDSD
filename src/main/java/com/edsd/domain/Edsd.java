@@ -35,95 +35,71 @@ public class Edsd {
 	@Autowired
 	private UsersRepository usersRepo;
 	
-	private double computedPrimesGrade;
-	private double computedPrimesIndices;
-	private double computedPrimes;
-	private double primesGradeTecniciteMontant;
-	private double primesIndicesAstreinteMontant;
-	private double primesIndicesSantePubliqueMontant;
-	private double primesIndicesMontant;
-	private double numberOfPrimesMonths;
+	private double totalPrimesIndices;
+
 	private final double TAX_PERCENTAGE = 5.28/100;
 	private final int HOUR = 3600000;
 	
 	public Edsd() {}
 	
-	
-	public Edsd(double computedPrimesGrade, double computedPrimesIndices) {
-		super();
-		this.computedPrimesGrade = computedPrimesGrade;
-		this.computedPrimesIndices = computedPrimesIndices;
-	}
-
-	
-	private void setNumberOfPrimesMonths(PrimesIndices primesIndices) {
-		System.out.println(primesIndices.getEndDate().getTime());
-		System.out.println(primesIndices.getStartDate().getTime());
-		this.numberOfPrimesMonths = (primesIndices.getEndDate().getTime() - primesIndices.getStartDate().getTime() + HOUR)/(3600*1000*24*30.0);
+	private double getNumberOfMonths(Date startDate, Date endDate) {
+		return (endDate.getTime() - startDate.getTime() + HOUR)/(3600*1000*24*30.0);
 	}
 	
-	private void setNumberOfPrimesMonths(PrimesGrade primesGrade) {
-		this.numberOfPrimesMonths = (primesGrade.getEndDate().getTime() - primesGrade.getStartDate().getTime() + HOUR)/(3600*1000*24*30.0);
+	private double getPrimesGradeTecniciteMontant(PrimesGrade primesGrade) {
+		return primesGradeRepo.findByGradeOuCategorieAndClasseIgnoreCase(primesGrade.getGrade(), primesGrade.getClasse()).getMontant();
 	}
 	
-	private double getNumberOfPrimesMonths() {
-		return numberOfPrimesMonths;
-	}
-	
-	private void setPrimesGradeTecniciteMontant(PrimesGrade primesGrade) {
-		this.primesGradeTecniciteMontant = primesGradeRepo.findByGradeOuCategorieAndClasseIgnoreCase(primesGrade.getGrade(), primesGrade.getClasse()).getMontant();
-	}
-	
-	private double getPrimesGradeTecniciteMontant() {
-		return primesGradeTecniciteMontant;
-	}
-	
-	private void setPrimesIndicesMontant(PrimesIndices primesIndices) {
-		List<PrimesLieesAuxIndices> primeLieesAuxIndices = primesIndicesRepo.findByGroupeAndClasseIgnoreCase(primesIndices.getGroupe(), primesIndices.getClasse());
+	private double getComputedPrimesIndicesMontant(PrimesIndices primesIndices) {
+		List<PrimesLieesAuxIndices> primeLieesAuxIndices = primesIndicesRepo.findByGroupeIgnoreCase(primesIndices.getGroupe());
 		primeLieesAuxIndices.forEach(primeLieesAuxIndice -> {
-			if(primeLieesAuxIndice.getIndemnite().equalsIgnoreCase("astreinte")) {
-				primesIndicesAstreinteMontant = primeLieesAuxIndice.getMontant();
-			} else {
-				primesIndicesSantePubliqueMontant = primeLieesAuxIndice.getMontant();
-			}
+			totalPrimesIndices += primeLieesAuxIndice.getMontant();
 		});
-		primesIndicesMontant = primesIndicesAstreinteMontant + primesIndicesSantePubliqueMontant;
-	}
-	
-	private double getPrimesIndicesMontant() {
-		return primesIndicesMontant;
+		return totalPrimesIndices;
 	}
 
-	private double getComputedPrimesGrade(PrimesGrade primesGrade) {
-		this.setPrimesGradeTecniciteMontant(primesGrade);
-		this.setNumberOfPrimesMonths(primesGrade);
-		return computedPrimesGrade = this.getPrimesGradeTecniciteMontant() * (1 - TAX_PERCENTAGE) * this.getNumberOfPrimesMonths();
+	private double getComputedPrimesGrade(PrimesGrade primesGrade) {		
+		return this.getPrimesGradeTecniciteMontant(primesGrade) * (1 - TAX_PERCENTAGE) * this.getNumberOfMonths(primesGrade.getStartDate(), primesGrade.getEndDate());
 	}
 	
 	private double getComputedPrimesIndices(PrimesIndices primesIndices) {
-		this.setPrimesIndicesMontant(primesIndices);
-		this.setNumberOfPrimesMonths(primesIndices);
-		return computedPrimesIndices = this.getPrimesIndicesMontant() * (1 - TAX_PERCENTAGE) * this.getNumberOfPrimesMonths();
+		return this.getComputedPrimesIndicesMontant(primesIndices) * (1 - TAX_PERCENTAGE) * this.getNumberOfMonths(primesIndices.getStartDate(), primesIndices.getEndDate());
 	}
 
-	private void setComputedPrimes(PrimesIndices primesIndices, PrimesGrade primesGrade) {
-		computedPrimes = this.getComputedPrimesIndices(primesIndices)  + this.getComputedPrimesGrade(primesGrade) ;
+	private double getComputedPrimes(PrimesIndices primesIndices, PrimesGrade primesGrade, double retenues) {
+		return this.getComputedPrimesIndices(primesIndices)  + 
+				this.getComputedPrimesGrade(primesGrade) - 
+				this.getComputedRetenues(getNumberOfMonths(primesIndices.getStartDate(), primesIndices.getEndDate()), retenues);
 	}
 	
-	private double getComputedPrimes() {
-		return computedPrimes;
+	private int roundUp(double number) {
+		return (int)Math.round(number);
 	}
 	
-	public PrimesEdsd getPrimesEdsd(PrimesIndices primesIndices, PrimesGrade primesGrade, Principal principal, Requester requester) {
-		this.setComputedPrimes(primesIndices, primesGrade);
-		User user = usersRepo.findByUsername(principal.getName()).get();
-		
-		primesEdsd = new PrimesEdsd(user,
-			requester, primesGrade.getStartDate(), primesIndices.getEndDate(), 
-			primesGrade.getGrade(), primesGrade.getClasse(), this.getPrimesGradeTecniciteMontant(),
-			primesIndices.getGroupe(), primesIndices.getClasse(), this.primesIndicesAstreinteMontant, 
-			this.primesIndicesSantePubliqueMontant, this.getComputedPrimes(), this.getNumberOfPrimesMonths(),
-			this.getComputedPrimesGrade(primesGrade), this.getComputedPrimesIndices(primesIndices)
+	private double getComputedRetenues(double numberOfMonths, double montantRetenues) {
+		return numberOfMonths * montantRetenues;
+	}
+	
+	public PrimesEdsd createPrimesEdsd(User createdBy, Requester requester, PrimesIndices primesIndices, PrimesGrade primesGrade, double retenues) {
+		double computedPrimes = getComputedPrimes(primesIndices, primesGrade, retenues);
+		primesEdsd = new PrimesEdsd(
+			createdBy,
+			requester, 
+			primesGrade.getStartDate(), 
+			primesIndices.getEndDate(), 
+			primesGrade.getGrade(), 
+			primesGrade.getClasse(), 
+			getPrimesGradeTecniciteMontant(primesGrade),
+			primesIndices.getGroupe(), 
+			primesIndices.getClasse(), 
+			retenues,
+			primesIndicesRepo.findByGroupeAndIndemniteLikeIgnoreCase(primesIndices.getGroupe(), "%astreinte").get(0).getMontant(), 
+			primesIndicesRepo.findByGroupeAndIndemniteLikeIgnoreCase(primesIndices.getGroupe(), "%publique").get(0).getMontant(),  
+			computedPrimes, 
+			roundUp(computedPrimes),
+			getNumberOfMonths(primesGrade.getStartDate(), primesGrade.getEndDate()),
+			getComputedPrimesGrade(primesGrade), 
+			getComputedPrimesIndices(primesIndices)
 		);
 		return primesEdsdRepo.save(primesEdsd);
 	}

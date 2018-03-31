@@ -16,53 +16,38 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `primes_edsd`
+-- Table structure for table `rappels_salaires_edsd`
 --
 
-DROP TABLE IF EXISTS `primes_edsd`;
+DROP TABLE IF EXISTS `rappels_salaires_edsd`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `primes_edsd` (
-  `primes_edsd_id` int(11) NOT NULL AUTO_INCREMENT,
-  `retenues` double NOT NULL DEFAULT 0.0,
-  `classe_liee_au_grade` varchar(100) NOT NULL,
-  `classe_liee_aux_indices` varchar(100) NOT NULL,
-  `computed_primes` double NOT NULL,
-  `actual_primes` int(11) NOT NULL,
-  `computed_primes_grade` double NOT NULL,
-  `computed_primes_indices` double NOT NULL,
+CREATE TABLE `rappels_salaires_edsd` (
+  `rappels_salaires_id` int(11) NOT NULL AUTO_INCREMENT,
+  `actual_rappels_salaires` int(11) NOT NULL,
+  `computed_rappels_salaires` double NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `end_date` date NOT NULL,
-  `grade` varchar(100) NOT NULL,
-  `groupe` varchar(100) NOT NULL,
-  `indemnite_liee_au_grade_technicite` double NOT NULL,
-  `indemnite_liee_aux_indices_astreinte` double NOT NULL,
-  `indemnite_liee_aux_indices_sante_publique` double NOT NULL,
   `number_of_months` double NOT NULL,
+  `salaire_de_base` double NOT NULL,
   `start_date` date NOT NULL,
   `requester_id` int(11) NOT NULL,
   `created_by_user_id` int(11) NOT NULL,
-  PRIMARY KEY (`primes_edsd_id`),
-  UNIQUE KEY `UKb92ohaowa9a8eg6uwlj1f4yuq` (`primes_edsd_id`,`requester_id`),
-  UNIQUE KEY `primes_edsd_id_UNIQUE` (`primes_edsd_id`),
-  UNIQUE KEY `requester_id_UNIQUE` (`requester_id`),
-  KEY `FKs4tpxsx2hhfos18dw6wmeor84` (`requester_id`),
-  KEY `FK8hdjdm9waefn0x369svcrhryt` (`created_by_user_id`),
-  CONSTRAINT `FK8hdjdm9waefn0x369svcrhryt` FOREIGN KEY (`created_by_user_id`) REFERENCES `user` (`user_id`),
-  CONSTRAINT `FKs4tpxsx2hhfos18dw6wmeor84` FOREIGN KEY (`requester_id`) REFERENCES `requester` (`requester_id`)
+  PRIMARY KEY (`rappels_salaires_id`),
+  KEY `FKlyaykammyimcb4jsp51t7wa4g` (`requester_id`),
+  KEY `FKll7u2dhphbnnoqyh92052fj9e` (`created_by_user_id`),
+  CONSTRAINT `FKll7u2dhphbnnoqyh92052fj9e` FOREIGN KEY (`created_by_user_id`) REFERENCES `user` (`user_id`),
+  CONSTRAINT `FKlyaykammyimcb4jsp51t7wa4g` FOREIGN KEY (`requester_id`) REFERENCES `requester` (`requester_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-ALTER TABLE `primes_edsd` AUTO_INCREMENT = 0;
-
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `primes_edsd`
+-- Dumping data for table `rappels_salaires_edsd`
 --
 
-LOCK TABLES `primes_edsd` WRITE;
-/*!40000 ALTER TABLE `primes_edsd` DISABLE KEYS */;
-/*!40000 ALTER TABLE `primes_edsd` ENABLE KEYS */;
+LOCK TABLES `rappels_salaires_edsd` WRITE;
+/*!40000 ALTER TABLE `rappels_salaires_edsd` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rappels_salaires_edsd` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -74,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-23 20:44:14
+-- Dump completed on 2018-03-31  0:32:21
