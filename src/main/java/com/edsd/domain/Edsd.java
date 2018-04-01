@@ -1,25 +1,34 @@
 package com.edsd.domain;
 
-import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
 
+import com.edsd.config.DuplicateEdsdNotAllowException;
+//import com.edsd.Controllers.ErrorResponse;
+import com.edsd.model.NonLogement;
+import com.edsd.model.NonLogementEdsd;
 import com.edsd.model.PrimesEdsd;
 import com.edsd.model.PrimesGrade;
 import com.edsd.model.PrimesIndices;
 import com.edsd.model.PrimesLieesAuxIndices;
+import com.edsd.model.RappelsSalaires;
+import com.edsd.model.RappelsSalairesEdsd;
 import com.edsd.model.Requester;
 import com.edsd.model.User;
+import com.edsd.repository.NonLogementEdsdRepository;
 import com.edsd.repository.PrimesEdsdRepository;
 import com.edsd.repository.PrimesLieesAuGadeOuCategorieRepository;
 import com.edsd.repository.PrimesLieesAuxIndicesRepository;
-import com.edsd.repository.UsersRepository;
+import com.edsd.repository.RappelsSalairesEdsdRepository;
 
-import java.security.Principal;
 import java.sql.Date;
+
 
 @Component
 public class Edsd {
@@ -31,9 +40,10 @@ public class Edsd {
 	@Autowired
 	private PrimesEdsdRepository primesEdsdRepo;
 	@Autowired
-	private PrimesEdsd primesEdsd;
+	private NonLogementEdsdRepository nonLogementEdsdRepo;
 	@Autowired
-	private UsersRepository usersRepo;
+	private RappelsSalairesEdsdRepository rappelsSalairesEdsdRepo;
+	
 	
 	private double totalPrimesIndices;
 
@@ -72,7 +82,7 @@ public class Edsd {
 				this.getComputedRetenues(getNumberOfMonths(primesIndices.getStartDate(), primesIndices.getEndDate()), retenues);
 	}
 	
-	private int roundUp(double number) {
+	private int getRoundUp(double number) {
 		return (int)Math.round(number);
 	}
 	
@@ -80,27 +90,94 @@ public class Edsd {
 		return numberOfMonths * montantRetenues;
 	}
 	
-	public PrimesEdsd createPrimesEdsd(User createdBy, Requester requester, PrimesIndices primesIndices, PrimesGrade primesGrade, double retenues) {
-		double computedPrimes = getComputedPrimes(primesIndices, primesGrade, retenues);
-		primesEdsd = new PrimesEdsd(
-			createdBy,
-			requester, 
-			primesGrade.getStartDate(), 
-			primesIndices.getEndDate(), 
-			primesGrade.getGrade(), 
-			primesGrade.getClasse(), 
-			getPrimesGradeTecniciteMontant(primesGrade),
-			primesIndices.getGroupe(), 
-			primesIndices.getClasse(), 
-			retenues,
-			primesIndicesRepo.findByGroupeAndIndemniteLikeIgnoreCase(primesIndices.getGroupe(), "%astreinte").get(0).getMontant(), 
-			primesIndicesRepo.findByGroupeAndIndemniteLikeIgnoreCase(primesIndices.getGroupe(), "%publique").get(0).getMontant(),  
-			computedPrimes, 
-			roundUp(computedPrimes),
-			getNumberOfMonths(primesGrade.getStartDate(), primesGrade.getEndDate()),
-			getComputedPrimesGrade(primesGrade), 
-			getComputedPrimesIndices(primesIndices)
-		);
-		return primesEdsdRepo.save(primesEdsd);
+	public PrimesEdsd createPrimesEdsd(User createdBy, Requester requester, PrimesIndices primesIndices, 
+			PrimesGrade primesGrade, double retenues) {
+		
+		if(primesEdsdRepo.findByStartDateAndEndDateAndBelongsToRequester(
+				primesGrade.getStartDate(), primesGrade.getEndDate(), requester).isEmpty()) {
+			
+			double computedPrimes = getComputedPrimes(primesIndices, primesGrade, retenues);
+			PrimesEdsd primesEdsd = new PrimesEdsd(
+				createdBy,
+				requester, 
+				primesGrade.getStartDate(), 
+				primesIndices.getEndDate(), 
+				primesGrade.getGrade(), 
+				primesGrade.getClasse(), 
+				getPrimesGradeTecniciteMontant(primesGrade),
+				primesIndices.getGroupe(), 
+				primesIndices.getClasse(), 
+				retenues,
+				primesIndicesRepo.findByGroupeAndIndemniteLikeIgnoreCase(primesIndices.getGroupe(), "%astreinte").get(0).getMontant(), 
+				primesIndicesRepo.findByGroupeAndIndemniteLikeIgnoreCase(primesIndices.getGroupe(), "%publique").get(0).getMontant(),  
+				computedPrimes, 
+				getRoundUp(computedPrimes),
+				getNumberOfMonths(primesGrade.getStartDate(), primesGrade.getEndDate()),
+				getComputedPrimesGrade(primesGrade), 
+				getComputedPrimesIndices(primesIndices)
+			);
+			return primesEdsdRepo.save(primesEdsd);
+		} else {
+			throw new DuplicateEdsdNotAllowException (
+				"Primes EDSD: Requester with matricule " + requester.getAccountNumber() + 
+				" has submitted a request for period " + primesGrade.getStartDate() + 
+				" to " + primesGrade.getEndDate() + " already.");
+		}
 	}
+
+	private double getComputedNonLogement(NonLogement nonLogement) {
+		return nonLogement.getSalaireDeBase() * getNumberOfMonths(nonLogement.getStartDate(), nonLogement.getEndDate()) * (20/100.0);
+	}
+	
+	public NonLogementEdsd createNonLogement(User createdBy, Requester requester, NonLogement nonLogement) {
+		if(nonLogementEdsdRepo.findByStartDateAndEndDateAndBelongsToRequester(
+				nonLogement.getStartDate(), nonLogement.getEndDate(), requester).isEmpty()) {
+			double computedNonLogement = getComputedNonLogement(nonLogement);
+			NonLogementEdsd nonLogementEdsd = new NonLogementEdsd(
+				createdBy, 
+				requester, 
+				nonLogement.getStartDate(), 
+				nonLogement.getEndDate(), 
+				nonLogement.getSalaireDeBase(), 
+				computedNonLogement,
+				getRoundUp(computedNonLogement), 
+				getNumberOfMonths(nonLogement.getStartDate(), nonLogement.getEndDate())
+			);
+			return nonLogementEdsdRepo.save(nonLogementEdsd);
+		} else {
+			throw new DuplicateEdsdNotAllowException (
+				"Non logement EDSD: Requester with matricule " + requester.getAccountNumber() + 
+				" has submitted a request for period " + nonLogement.getStartDate() + 
+				" to " + nonLogement.getEndDate() + " already.");
+		}
+	}
+
+	private double getComputedRappelsSalaires(RappelsSalaires rappelsSalaires) {
+		return rappelsSalaires.getSalaireDeBase() * getNumberOfMonths(rappelsSalaires.getStartDate(), rappelsSalaires.getEndDate());
+	}
+	
+	public RappelsSalairesEdsd createRappelsSalaires(User createdBy, Requester requester, RappelsSalaires rappelsSalaires) {
+		if(rappelsSalairesEdsdRepo.findByStartDateAndEndDateAndBelongsToRequester(
+				rappelsSalaires.getStartDate(), rappelsSalaires.getEndDate(), requester).isEmpty()) {
+			double computedRappelsSalaires = getComputedRappelsSalaires(rappelsSalaires);
+			RappelsSalairesEdsd rappelsSalairesEdsd = new RappelsSalairesEdsd(
+				rappelsSalaires.getStartDate(), 
+				rappelsSalaires.getEndDate(), 
+				rappelsSalaires.getSalaireDeBase(), 
+				requester, 
+				createdBy, 
+				computedRappelsSalaires,
+				getRoundUp(computedRappelsSalaires), 
+				getNumberOfMonths(rappelsSalaires.getStartDate(), rappelsSalaires.getEndDate())
+			);
+			return rappelsSalairesEdsdRepo.save(rappelsSalairesEdsd);
+		} else {
+			throw new DuplicateEdsdNotAllowException (
+				"Rappels Salaires EDSD: Requester with matricule " + requester.getAccountNumber() + 
+				" has submitted a request for period " + rappelsSalaires.getStartDate() + 
+				" to " + rappelsSalaires.getEndDate() + " already.");
+		}
+		
+	}
+
 }

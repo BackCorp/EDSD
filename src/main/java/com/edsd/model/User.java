@@ -66,6 +66,14 @@ public class User {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="createdBy", orphanRemoval=true)
 	@JsonManagedReference
     private Set<PrimesEdsd> primesEdsd;
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="createdBy", orphanRemoval=true)
+	@JsonManagedReference
+    private Set<NonLogementEdsd> nonLogementEdsd;
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="createdBy", orphanRemoval=true)
+	@JsonManagedReference
+    private Set<RappelsSalairesEdsd> rappelsSalairesEdsd;
     
 
 	public User() {
@@ -164,7 +172,23 @@ public class User {
 	public void setPrimesEdsd(Set<PrimesEdsd> primesEdsd) {
 		this.primesEdsd = primesEdsd;
 	}
-    
+	
+	public Set<NonLogementEdsd> getNonLogementEdsd() {
+		return nonLogementEdsd;
+	}
+
+	public void setNonLogementEdsd(Set<NonLogementEdsd> nonLogementEdsd) {
+		this.nonLogementEdsd = nonLogementEdsd;
+	}
+
+	public Set<RappelsSalairesEdsd> getRappelsSalairesEdsd() {
+		return rappelsSalairesEdsd;
+	}
+
+	public void setRappelsSalaires(Set<RappelsSalairesEdsd> rappelsSalairesEdsd) {
+		this.rappelsSalairesEdsd = rappelsSalairesEdsd;
+	}
+
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", lastName=" + lastName + ", firstName=" + firstName + ", midName=" + midName

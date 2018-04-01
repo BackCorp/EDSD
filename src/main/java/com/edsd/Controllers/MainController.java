@@ -10,27 +10,21 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import com.edsd.domain.Edsd;
-import com.edsd.model.NonLogement;
+import com.edsd.domain.NonLogementEdsdException;
+import com.edsd.model.NonLogementEdsd;
 import com.edsd.model.PrimesEdsd;
-import com.edsd.model.PrimesGrade;
-import com.edsd.model.PrimesIndices;
-import com.edsd.model.PrimesLieesAuGradeOuCategorie;
-import com.edsd.model.PrimesLieesAuxIndices;
-import com.edsd.model.RappelsSalaires;
+import com.edsd.model.RappelsSalairesEdsd;
 import com.edsd.model.RequestHolder;
-import com.edsd.model.Requester;
 import com.edsd.model.Role;
 import com.edsd.model.User;
 import com.edsd.repository.PrimesEdsdRepository;
-import com.edsd.repository.PrimesLieesAuGadeOuCategorieRepository;
-import com.edsd.repository.PrimesLieesAuxIndicesRepository;
 import com.edsd.repository.RequestersRepository;
 import com.edsd.repository.UsersRepository;
 import com.edsd.service.StatsService;
@@ -43,19 +37,13 @@ public class MainController {
 	@Autowired
 	private UsersRepository usersRepo;
 	@Autowired
-	private StatsService statsService;
+	private PrimesEdsdRepository primesEdsdRepo;
 	@Autowired
 	private RequestersRepository requesterRepo;
 	@Autowired
-	private PrimesLieesAuGadeOuCategorieRepository primesGradeRepo;
-	@Autowired
-	private PrimesLieesAuxIndicesRepository primesIndicesRepo;
-	@Autowired
-	private PrimesEdsdRepository primesEdsdRepo;
-	@Autowired
 	private Edsd edsd;
 	
-	private PrimesEdsd createdPrimesEdsd;
+	private List<Object> edsdObjs = new ArrayList<>();
 	
 	@GetMapping("/home")
     public ArrayList<Role> home() {
@@ -65,37 +53,25 @@ public class MainController {
         return arr;
     }
 
-	// in the future, this should return an object containing all the stats
-	@GetMapping("/stats")
-	public StatsService getStats() {
-		statsService.setUserCount((int)usersRepo.count());
-		statsService.setAgentCount((int)usersRepo.countByRolesRoleLike("AGENT"));
-		statsService.setAdminCount((int)usersRepo.countByRolesRoleLike("ADMIN"));
-		statsService.setTotalRequesters((int)requesterRepo.count());
-		return statsService;
-	}
-		
-    @PostMapping("/primes")
-    public PrimesEdsd createPrimesEdsd(@RequestBody RequestHolder requestHolder, Principal principal) {
-    	  	
+    @PostMapping("")
+    public List<Object> createPrimesEdsd(@RequestBody RequestHolder requestHolder, Principal principal) {
+    	if(!(edsdObjs == null || edsdObjs.isEmpty())) {
+    		edsdObjs.clear();
+    	}
     	usersRepo.findByUsername(principal.getName()).ifPresent(user -> {
-    		System.out.println("===================================");
-    		System.out.println(user);
     		requesterRepo.findByAccountNumber(requestHolder.getRequesterAccountNumber()).ifPresent(requester -> {
-    			System.out.println(requestHolder.getNonLogement());
         		if(!(requestHolder.getPrimesGrade() == null || requestHolder.getPrimesIndices() == null)) {
-        			createdPrimesEdsd = edsd.createPrimesEdsd(user, requester, requestHolder.getPrimesIndices(), requestHolder.getPrimesGrade(), requestHolder.getRetenues());
+        			edsdObjs.add(edsd.createPrimesEdsd(user, requester, requestHolder.getPrimesIndices(), requestHolder.getPrimesGrade(), requestHolder.getRetenues()));
         		}
         		if(requestHolder.getNonLogement() != null) {
-        			// create non logement
+        			edsdObjs.add(edsd.createNonLogement(user, requester, requestHolder.getNonLogement()));
         		}
         		if(requestHolder.getRappelsSalaires() != null) {
-        			// create rappelsSalaires
+        			edsdObjs.add(edsd.createRappelsSalaires(user, requester, requestHolder.getRappelsSalaires()));
         		}
         	});
     	});
-
-    	return createdPrimesEdsd;
+    	return edsdObjs;
     }
     
     @GetMapping("/test")
@@ -105,7 +81,7 @@ public class MainController {
     
     @GetMapping("/primes")
     public Set<PrimesEdsd> getAllPrimesEdsd(Principal principal) {
-    	Set<PrimesEdsd> primesEdsdSet = Collections.<PrimesEdsd>emptySet();;
+    	Set<PrimesEdsd> primesEdsdSet = Collections.<PrimesEdsd>emptySet();
 		Optional<User> optional = usersRepo.findByUsername(principal.getName());
 		if(optional.isPresent()) {
 			primesEdsdSet = optional.get().getPrimesEdsd();
@@ -113,9 +89,30 @@ public class MainController {
     	return primesEdsdSet;
     }
     
+    @GetMapping("/nonLogements")
+    public Set<NonLogementEdsd> getAllNonLogementsEdsd(Principal principal) {
+    	Set<NonLogementEdsd> nonLogementEdsd = Collections.<NonLogementEdsd>emptySet();
+		Optional<User> optional = usersRepo.findByUsername(principal.getName());
+		if(optional.isPresent()) {
+			nonLogementEdsd = optional.get().getNonLogementEdsd();
+		}
+    	return nonLogementEdsd;
+    }
+    
+    @GetMapping("/rappelsSalaires")
+    public Set<RappelsSalairesEdsd> getAllrappelsSalairesEdsd(Principal principal) {
+    	Set<RappelsSalairesEdsd> rappelsSalairesEdsd = Collections.<RappelsSalairesEdsd>emptySet();
+		Optional<User> optional = usersRepo.findByUsername(principal.getName());
+		if(optional.isPresent()) {
+			rappelsSalairesEdsd = optional.get().getRappelsSalairesEdsd();
+		}
+    	return rappelsSalairesEdsd;
+    }
+    
 //    @GetMapping("/primes/{requesterAccountNumber}")
 //    public PrimesEdsd getAllPrimesEdsdByRequesterAccountNumber() {
 //    	return null;
-//    }
+//    }  
     
 }
+

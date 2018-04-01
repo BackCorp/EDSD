@@ -1,5 +1,6 @@
 package com.edsd.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,5 +14,7 @@ public interface PrimesEdsdRepository extends JpaRepository<PrimesEdsd, Integer>
 	
 	@Transactional(readOnly = true)
 	public List<PrimesEdsd> findByBelongsToRequester(Requester belongsToRequester);
+	
+	public List<PrimesEdsd> findByStartDateAndEndDateAndBelongsToRequester(Date startDate, Date endDate, Requester belongsToRequester);
 	
 }

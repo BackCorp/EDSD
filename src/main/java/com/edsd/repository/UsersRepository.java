@@ -29,7 +29,9 @@ public interface UsersRepository extends JpaRepository<User, Integer>, CrudRepos
 	
 	public long count();
 	
-	public long countByRolesRoleLike(String role); 
+	public long countByRolesRoleLikeAndActiveTrue(String role); 
+	
+	public long countByActiveFalse(); 
 	
 }
 
