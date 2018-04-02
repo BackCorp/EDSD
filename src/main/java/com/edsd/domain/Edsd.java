@@ -3,14 +3,9 @@ package com.edsd.domain;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
 
 import com.edsd.config.DuplicateEdsdNotAllowException;
-//import com.edsd.Controllers.ErrorResponse;
 import com.edsd.model.NonLogement;
 import com.edsd.model.NonLogementEdsd;
 import com.edsd.model.PrimesEdsd;

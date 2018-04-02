@@ -4,13 +4,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.data.annotation.CreatedBy;
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import java.io.Serializable;
 import java.util.Set;
 
 @Entity
@@ -53,11 +49,11 @@ public class User {
     @Size(min=1, max=100)
     private String email;
     
-    @NotBlank
     @Column(name = "active", columnDefinition= "BOOLEAN DEFAULT true") 
     @NotNull(message="User must be Enabled or Disabled")
     private boolean active;
     
+    @NotNull(message="User must have a role. It should be either ADMIN, AGENT or NO_ROLE")
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"), 
     	inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
@@ -89,7 +85,6 @@ public class User {
     	this.email = user.getEmail();
         this.active = user.getActive();        
         this.roles = user.getRoles();
-//        this.primesEdsd = user.getPrimesEdsd();
     }
     
 

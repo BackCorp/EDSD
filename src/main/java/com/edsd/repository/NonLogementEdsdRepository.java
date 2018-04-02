@@ -8,7 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.edsd.model.NonLogementEdsd;
-import com.edsd.model.PrimesEdsd;
 import com.edsd.model.Requester;
 
 public interface NonLogementEdsdRepository extends JpaRepository<NonLogementEdsd, Integer>, CrudRepository<NonLogementEdsd, Integer> {

@@ -1,6 +1,5 @@
 package com.edsd.service;
 
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,8 +15,6 @@ public class StatsService {
 	public StatsService() {
 		super();
 	}
-
-	
 
 	public StatsService(int enabledAgentCount, int disabledAgentCount,
 			int requesterCount, int primesEdsdCount, int nonLogementEdsdCount,

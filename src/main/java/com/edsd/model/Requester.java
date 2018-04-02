@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,6 +22,8 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table(name = "requester", catalog = "edsd", uniqueConstraints = 
 @UniqueConstraint(columnNames = {"requester_id", "account_number"}))
 public class Requester implements Serializable {
+
+	private static final long serialVersionUID = -2180900491220096053L;
 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,7 +1,5 @@
 package com.edsd.model;
 
-import java.util.Set;
-
 import javax.persistence.*;
 
 @Entity
@@ -14,7 +12,7 @@ public class Role {
     @Column(name = "role_id")
     private int roleId;
     
-
+    
 	@Column(name = "role", unique = true, nullable = false)
     private String role;
 	

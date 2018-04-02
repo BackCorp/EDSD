@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.edsd.domain.Edsd;
-import com.edsd.domain.NonLogementEdsdException;
 import com.edsd.model.NonLogementEdsd;
 import com.edsd.model.PrimesEdsd;
 import com.edsd.model.RappelsSalairesEdsd;
@@ -27,7 +25,6 @@ import com.edsd.model.User;
 import com.edsd.repository.PrimesEdsdRepository;
 import com.edsd.repository.RequestersRepository;
 import com.edsd.repository.UsersRepository;
-import com.edsd.service.StatsService;
 
 @PreAuthorize("hasAnyRole('AGENT')")
 @RequestMapping("/api/edsd")

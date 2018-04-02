@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +17,7 @@ import com.edsd.model.Role;
 import com.edsd.model.User;
 import com.edsd.repository.RolesRepository;
 import com.edsd.repository.UsersRepository;
-import com.edsd.service.StatsService;
+
 
 @PreAuthorize("hasAnyRole('ADMIN')")
 @RequestMapping("/api/agents")
@@ -29,8 +28,6 @@ public class AgentController {
 	private UsersRepository usersRepo;
 	@Autowired
 	private RolesRepository rolesRepo;
-	@Autowired
-	private StatsService statsService;
 	
 	@GetMapping("")
 	public List<User> findAllAgents() {
@@ -80,10 +77,14 @@ public class AgentController {
 				u.setPassword("");
 			} else if(!us.get().getActive() && user.getActive()) {
 				us.get().setActive(true);
+				us.get().getRoles().clear();
+				us.get().getRoles().add(rolesRepo.findByRoleIgnoreCase("AGENT"));
 				u = usersRepo.save(us.get());
 				u.setPassword("");
 			} else if(us.get().getActive() && !user.getActive()) {
 				us.get().setActive(false);
+				us.get().getRoles().clear();
+				us.get().getRoles().add(rolesRepo.findByRoleIgnoreCase("NO_ROLE"));
 				u = usersRepo.save(us.get());
 				u.setPassword("");
 			}
@@ -130,17 +131,8 @@ public class AgentController {
 		return userToBeUpdated;
 	}
 	
-	private User getUpdatedDisabledUser(User userToBeUpdated, User userModel) {
-		userToBeUpdated.setActive(userModel.getActive());
-		return userToBeUpdated;
-	}
-	
-	
 }
 
 
-//@CreatedBy
-//private User user;
-//
 //@CreatedDate
 //private DateTime createdDate;
