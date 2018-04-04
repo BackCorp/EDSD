@@ -1,4 +1,4 @@
-INSERT INTO `edsd`.`requester`
+INSERT INTO `heroku_e677632625f8d81`.`requester`
 (
 `account_number`,
 `last_name`,
@@ -24,7 +24,7 @@ VALUES
 	STR_TO_DATE('12-07-2020', '%m-%d-%Y'),'MEDECIN','MEDECIN','A2',1,'En Activité');
 
 
-INSERT INTO `edsd`.`requester`
+INSERT INTO `heroku_e677632625f8d81`.`requester`
 (
 `account_number`,
 `last_name`,
