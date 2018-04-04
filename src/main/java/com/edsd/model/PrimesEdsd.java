@@ -1,10 +1,13 @@
 package com.edsd.model;
 
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -30,6 +33,8 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table(name = "primes_edsd", catalog = "edsd", uniqueConstraints = 
 @UniqueConstraint(columnNames = {"primes_edsd_id"}))
 public class PrimesEdsd {
+
+//	private static final long serialVersionUID = 6686275444648247316L;
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -88,6 +93,7 @@ public class PrimesEdsd {
 	@JoinColumn(name="requester_id", nullable = false)
 	private Requester belongsToRequester;
 	
+	@CreatedBy
 	@NotNull(message="The field createdby is required")
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "created_by_user_id")
@@ -140,6 +146,28 @@ public class PrimesEdsd {
 		this.computedPrimesIndices = computedPrimesIndices;
 	}
 
+	public PrimesEdsd(PrimesEdsd primesEdsd) {
+		super();
+		this.primesEdsdId = primesEdsd.getPrimesEdsdId();
+		this.retenues = primesEdsd.getRetenues();
+		this.startDate = primesEdsd.getStartDate();
+		this.endDate = primesEdsd.getEndDate();
+		this.grade = primesEdsd.getGrade();
+		this.classeLieeAuGrade = primesEdsd.getClasseLieeAuGrade();
+		this.indemniteLieeAuGradeTechnicite = primesEdsd.getIndemniteLieeAuGradeTechnicite();
+		this.groupe = primesEdsd.getGroupe();
+		this.classeLieeAuxIndices = primesEdsd.getClasseLieeAuxIndices();
+		this.indemniteLieeAuxIndicesAstreinte = primesEdsd.getIndemniteLieeAuxIndicesAstreinte();
+		this.indemniteLieeAuxIndicesSantePublique = primesEdsd.getIndemniteLieeAuxIndicesSantePublique();
+		this.belongsToRequester = primesEdsd.getBelongsToRequester();
+		this.createdBy = primesEdsd.getCreatedBy();
+		this.computedPrimes = primesEdsd.getComputedPrimes();
+		this.actualPrimes = primesEdsd.getActualPrimes();
+		this.numberOfMonths = primesEdsd.getNumberOfMonths();
+		this.computedPrimesGrade = primesEdsd.getComputedPrimesGrade();
+		this.computedPrimesIndices = primesEdsd.getComputedPrimesIndices();
+	}
+	
 	public int getPrimesEdsdId() {
 		return primesEdsdId;
 	}

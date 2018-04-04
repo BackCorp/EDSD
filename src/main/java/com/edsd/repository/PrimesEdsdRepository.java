@@ -17,4 +17,7 @@ public interface PrimesEdsdRepository extends JpaRepository<PrimesEdsd, Integer>
 	
 	public List<PrimesEdsd> findByStartDateAndEndDateAndBelongsToRequester(Date startDate, Date endDate, Requester belongsToRequester);
 	
+	@Transactional(readOnly = true)
+	public List<PrimesEdsd> findAll();
+	
 }

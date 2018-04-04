@@ -1,6 +1,7 @@
 package com.edsd.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +33,8 @@ public interface UsersRepository extends JpaRepository<User, Integer>, CrudRepos
 	public long countByRolesRoleLikeAndActiveTrue(String role); 
 	
 	public long countByActiveFalse(); 
+	
+//	public List<User> findById(); 
 	
 }
 

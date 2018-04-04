@@ -41,6 +41,8 @@ CREATE TABLE `rappels_salaires_edsd` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+ALTER TABLE `rappels_salaires_edsd` AUTO_INCREMENT = 0;
+
 --
 -- Dumping data for table `rappels_salaires_edsd`
 --

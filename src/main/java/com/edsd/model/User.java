@@ -5,6 +5,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.Set;
@@ -133,7 +136,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = (new BCryptPasswordEncoder()).encode(password);
     }
         
     public String getEmail() {
