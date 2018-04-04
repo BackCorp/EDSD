@@ -38,7 +38,7 @@ CREATE TABLE `rappels_salaires_edsd` (
   KEY `FKll7u2dhphbnnoqyh92052fj9e` (`created_by_user_id`),
   CONSTRAINT `FKll7u2dhphbnnoqyh92052fj9e` FOREIGN KEY (`created_by_user_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `FKlyaykammyimcb4jsp51t7wa4g` FOREIGN KEY (`requester_id`) REFERENCES `requester` (`requester_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 ALTER TABLE `heroku_e677632625f8d81`.`rappels_salaires_edsd` AUTO_INCREMENT = 0;

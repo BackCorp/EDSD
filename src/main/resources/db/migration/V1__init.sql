@@ -2,8 +2,8 @@
 --- DROP DATABASE IF EXISTS `edsd`;
 --- CREATE DATABASE `edsd`;
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
+DROP TABLE IF EXISTS `heroku_e677632625f8d81`.`user`;
+CREATE TABLE `heroku_e677632625f8d81`.`user` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `email` varchar(100) CHARACTER SET utf8 NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE `user` (
   UNIQUE KEY `UKku8s9ykb4c149v6ttg9nuypsx` (`user_id`,`username`,`email`),
   UNIQUE KEY `UK_ob8kqyqqgmefl0aco34akdtpe` (`email`),
   UNIQUE KEY `UK_sb8bbouer5wak8vyiiy4pf2bx` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 ALTER TABLE `heroku_e677632625f8d81`.`user` AUTO_INCREMENT = 0;
 
@@ -28,7 +28,7 @@ CREATE TABLE `role` (
   PRIMARY KEY (`role_id`),
   UNIQUE KEY `UKqwjh7xto53qcy2b835c6l4x14` (`role_id`,`role`),
   UNIQUE KEY `UK_bjxn5ii7v7ygwx39et0wawu0q` (`role`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 ALTER TABLE `heroku_e677632625f8d81`.`role` AUTO_INCREMENT = 0;
 
@@ -41,7 +41,7 @@ CREATE TABLE `user_role` (
   KEY `FKa68196081fvovjhkek5m97n3y` (`role_id`),
   CONSTRAINT `FK859n2jvi8ivhui0rl0esws6o` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `FKa68196081fvovjhkek5m97n3y` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 ALTER TABLE `heroku_e677632625f8d81`.`user` AUTO_INCREMENT = 0;
 
@@ -76,7 +76,7 @@ CREATE TABLE `requester` (
   UNIQUE KEY `requester_id_UNIQUE` (`requester_id`),
   UNIQUE KEY `account_number_UNIQUE` (`account_number`),
   UNIQUE KEY `UKrvu1x64s164w06j7j6qectx5k` (`requester_id`,`account_number`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='This table describes whoever is submitting an EDSD request';
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='This table describes whoever is submitting an EDSD request';
 
 ALTER TABLE `heroku_e677632625f8d81`.`requester` AUTO_INCREMENT = 0;
 

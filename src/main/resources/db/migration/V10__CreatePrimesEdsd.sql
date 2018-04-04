@@ -49,7 +49,7 @@ CREATE TABLE `primes_edsd` (
   KEY `FK8hdjdm9waefn0x369svcrhryt` (`created_by_user_id`),
   CONSTRAINT `FK8hdjdm9waefn0x369svcrhryt` FOREIGN KEY (`created_by_user_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `FKs4tpxsx2hhfos18dw6wmeor84` FOREIGN KEY (`requester_id`) REFERENCES `requester` (`requester_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
 ALTER TABLE `heroku_e677632625f8d81`.`primes_edsd` AUTO_INCREMENT = 0;
 

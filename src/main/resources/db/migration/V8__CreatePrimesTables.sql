@@ -30,7 +30,7 @@ CREATE TABLE `primes_liees_au_grade_ou_categorie` (
   `montant` double NOT NULL,
   `observations` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 ALTER TABLE `heroku_e677632625f8d81`.`primes_liees_au_grade_ou_categorie` AUTO_INCREMENT = 0;
@@ -88,7 +88,7 @@ CREATE TABLE `primes_liees_aux_indices` (
   `observations` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK3cukgum7m6wofvplul5816jor` (`id`,`groupe`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 ALTER TABLE `heroku_e677632625f8d81`.`primes_liees_aux_indices` AUTO_INCREMENT = 0;

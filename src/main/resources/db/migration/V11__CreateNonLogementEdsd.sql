@@ -38,7 +38,7 @@ CREATE TABLE `non_logement_edsd` (
   KEY `FKcpj5lu81uveqgp5ifuuv2mbaa` (`created_by_user_id`),
   CONSTRAINT `FKcpj5lu81uveqgp5ifuuv2mbaa` FOREIGN KEY (`created_by_user_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `FKow7o20p0utnfxbvn56gyugapp` FOREIGN KEY (`requester_id`) REFERENCES `requester` (`requester_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 ALTER TABLE `heroku_e677632625f8d81`.`non_logement_edsd` AUTO_INCREMENT = 0;
