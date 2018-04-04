@@ -19,7 +19,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 
 @Entity
-@Table(name = "requester", catalog = "edsd", uniqueConstraints = 
+@Table(name = "requester", catalog = "heroku_5889aeb3caa53dd", uniqueConstraints = 
 @UniqueConstraint(columnNames = {"requester_id", "account_number"}))
 public class Requester implements Serializable {
 

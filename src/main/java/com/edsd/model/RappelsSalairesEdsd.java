@@ -24,7 +24,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Component
-@Table(name = "rappels_salaires_edsd", catalog = "edsd", uniqueConstraints = 
+@Table(name = "rappels_salaires_edsd", catalog = "heroku_5889aeb3caa53dd", uniqueConstraints = 
 @UniqueConstraint(columnNames = {"rappels_salaires_id"}))
 public class RappelsSalairesEdsd {
 

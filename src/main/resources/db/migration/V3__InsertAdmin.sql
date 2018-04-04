@@ -1,4 +1,4 @@
-INSERT INTO `heroku_e677632625f8d81`.`user`
+INSERT INTO `heroku_5889aeb3caa53dd`.`user`
 (`last_name`,
 `first_name`,
 `username`,
@@ -9,7 +9,7 @@ VALUES
 ('Admin','Admin','admin','padmin','admin@edsd.com',1);
 
 
-INSERT INTO `heroku_e677632625f8d81`.`user`
+INSERT INTO `heroku_5889aeb3caa53dd`.`user`
 (`last_name`,
 `first_name`,
 `username`,

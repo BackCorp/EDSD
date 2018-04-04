@@ -88,11 +88,11 @@
 		    	<artifactId>flyway-maven-plugin</artifactId>
 		    	<version>5.0.7</version>
 			    <configuration>
-    				<url>jdbc:mysql://us-cdbr-iron-east-05.cleardb.net/heroku_e677632625f8d81?reconnect=true</url>
-			        <user>b9f6c93839f375</user>
-			        <password>ba3a747e</password>
+    				<url>jdbc:mysql://us-cdbr-iron-east-05.cleardb.net/heroku_5889aeb3caa53dd?reconnect=true</url>
+			        <user>bec03d8b7e3040</user>
+			        <password>41eee046</password>
 			        <schemas>
-			            <schema>heroku_e677632625f8d81</schema>
+			            <schema>heroku_5889aeb3caa53dd</schema>
 			        </schemas>
 			    </configuration>
 			</plugin>

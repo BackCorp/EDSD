@@ -1,9 +1,6 @@
 
---- DROP DATABASE IF EXISTS `edsd`;
---- CREATE DATABASE `edsd`;
-
-DROP TABLE IF EXISTS `heroku_e677632625f8d81`.`user`;
-CREATE TABLE `heroku_e677632625f8d81`.`user` (
+DROP TABLE IF EXISTS `heroku_5889aeb3caa53dd`.`user`;
+CREATE TABLE `heroku_5889aeb3caa53dd`.`user` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `email` varchar(100) CHARACTER SET utf8 NOT NULL,
@@ -18,11 +15,11 @@ CREATE TABLE `heroku_e677632625f8d81`.`user` (
   UNIQUE KEY `UK_sb8bbouer5wak8vyiiy4pf2bx` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-ALTER TABLE `heroku_e677632625f8d81`.`user` AUTO_INCREMENT = 0;
+ALTER TABLE `heroku_5889aeb3caa53dd`.`user` AUTO_INCREMENT=0;
 
 
-DROP TABLE IF EXISTS `role`;
-CREATE TABLE `role` (
+DROP TABLE IF EXISTS `heroku_5889aeb3caa53dd`.`role`;
+CREATE TABLE `heroku_5889aeb3caa53dd`.`role` (
   `role_id` int(11) NOT NULL AUTO_INCREMENT,
   `role` varchar(255) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`role_id`),
@@ -30,11 +27,11 @@ CREATE TABLE `role` (
   UNIQUE KEY `UK_bjxn5ii7v7ygwx39et0wawu0q` (`role`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-ALTER TABLE `heroku_e677632625f8d81`.`role` AUTO_INCREMENT = 0;
+ALTER TABLE `heroku_5889aeb3caa53dd`.`role` AUTO_INCREMENT=0;
 
 
-DROP TABLE IF EXISTS `user_role`;
-CREATE TABLE `user_role` (
+DROP TABLE IF EXISTS `heroku_5889aeb3caa53dd`.`user_role`;
+CREATE TABLE `heroku_5889aeb3caa53dd`.`user_role` (
   `user_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
   PRIMARY KEY (`user_id`,`role_id`),
@@ -43,11 +40,11 @@ CREATE TABLE `user_role` (
   CONSTRAINT `FKa68196081fvovjhkek5m97n3y` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-ALTER TABLE `heroku_e677632625f8d81`.`user` AUTO_INCREMENT = 0;
+ALTER TABLE `heroku_5889aeb3caa53dd`.`user` AUTO_INCREMENT=0;
 
 
-DROP TABLE IF EXISTS `requester`;
-CREATE TABLE `requester` (
+DROP TABLE IF EXISTS `heroku_5889aeb3caa53dd`.`requester`;
+CREATE TABLE `heroku_5889aeb3caa53dd`.`requester` (
   `requester_id` int(11) NOT NULL AUTO_INCREMENT,
   `account_number` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `last_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
@@ -78,5 +75,5 @@ CREATE TABLE `requester` (
   UNIQUE KEY `UKrvu1x64s164w06j7j6qectx5k` (`requester_id`,`account_number`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='This table describes whoever is submitting an EDSD request';
 
-ALTER TABLE `heroku_e677632625f8d81`.`requester` AUTO_INCREMENT = 0;
+ALTER TABLE `heroku_5889aeb3caa53dd`.`requester` AUTO_INCREMENT=0;
 

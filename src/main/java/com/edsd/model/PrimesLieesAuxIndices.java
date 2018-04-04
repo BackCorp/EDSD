@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name = "primes_liees_aux_indices", catalog = "edsd", uniqueConstraints = 
+@Table(name = "primes_liees_aux_indices", catalog = "heroku_5889aeb3caa53dd", uniqueConstraints = 
 @UniqueConstraint(columnNames = {"id", "groupe"}))
 public class PrimesLieesAuxIndices {
 	

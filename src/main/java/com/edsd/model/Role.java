@@ -3,7 +3,7 @@ package com.edsd.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "role", catalog = "edsd", uniqueConstraints = 
+@Table(name = "role", catalog = "heroku_5889aeb3caa53dd", uniqueConstraints = 
 		@UniqueConstraint(columnNames = { "role_id", "role"}))
 public class Role {
 

@@ -30,7 +30,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Component
-@Table(name = "primes_edsd", catalog = "edsd", uniqueConstraints = 
+@Table(name = "primes_edsd", catalog = "heroku_5889aeb3caa53dd", uniqueConstraints = 
 @UniqueConstraint(columnNames = {"primes_edsd_id"}))
 public class PrimesEdsd {
 

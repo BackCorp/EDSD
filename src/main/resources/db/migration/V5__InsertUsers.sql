@@ -1,5 +1,5 @@
 
-INSERT INTO `heroku_e677632625f8d81`.`user`
+INSERT INTO `heroku_5889aeb3caa53dd`.`user`
 (`last_name`,
 `first_name`,
 `username`,
@@ -9,7 +9,7 @@ INSERT INTO `heroku_e677632625f8d81`.`user`
 VALUES
 ('Atangana','Messi','AB123CD','$2a$10$AMGQA/jjZO9cftUdfBRRxuI1SX9CKZFS7ZaI.uKjisXLuhfzn0A5e','mAtangana@edsd.com',1);
 
-INSERT INTO `heroku_e677632625f8d81`.`user`
+INSERT INTO `heroku_5889aeb3caa53dd`.`user`
 (`last_name`,
 `first_name`,
 `username`,
@@ -19,7 +19,7 @@ INSERT INTO `heroku_e677632625f8d81`.`user`
 VALUES
 ('Messanga','Eboue','EF456GH','$2a$10$AMGQA/jjZO9cftUdfBRRxuI1SX9CKZFS7ZaI.uKjisXLuhfzn0A5e','eMessanga@edsd.com',1);
 
-INSERT INTO `heroku_e677632625f8d81`.`user`
+INSERT INTO `heroku_5889aeb3caa53dd`.`user`
 (`last_name`,
 `first_name`,
 `username`,
@@ -29,7 +29,7 @@ INSERT INTO `heroku_e677632625f8d81`.`user`
 VALUES
 ('Tamo','Isidore','IJ789KL','$2a$10$AMGQA/jjZO9cftUdfBRRxuI1SX9CKZFS7ZaI.uKjisXLuhfzn0A5e','iTamo@edsd.com',1);
 
-INSERT INTO `heroku_e677632625f8d81`.`user`
+INSERT INTO `heroku_5889aeb3caa53dd`.`user`
 (`last_name`,
 `first_name`,
 `username`,
@@ -41,7 +41,7 @@ VALUES
 
 
 
-INSERT INTO `heroku_e677632625f8d81`.`user`
+INSERT INTO `heroku_5889aeb3caa53dd`.`user`
 (`last_name`,
 `first_name`,
 `username`,
@@ -51,7 +51,7 @@ INSERT INTO `heroku_e677632625f8d81`.`user`
 VALUES
 ('Biya','Paul','QR345ST','$2a$10$AMGQA/jjZO9cftUdfBRRxuI1SX9CKZFS7ZaI.uKjisXLuhfzn0A5e','pBiya@edsd.com',0);
 
-INSERT INTO `heroku_e677632625f8d81`.`user`
+INSERT INTO `heroku_5889aeb3caa53dd`.`user`
 (`last_name`,
 `first_name`,
 `username`,
@@ -61,7 +61,7 @@ INSERT INTO `heroku_e677632625f8d81`.`user`
 VALUES
 ('Etoundi','Charles','UV678WX','$2a$10$AMGQA/jjZO9cftUdfBRRxuI1SX9CKZFS7ZaI.uKjisXLuhfzn0A5e','cEtoundi@edsd.com',0);
 
-INSERT INTO `heroku_e677632625f8d81`.`user`
+INSERT INTO `heroku_5889aeb3caa53dd`.`user`
 (`last_name`,
 `first_name`,
 `username`,

@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.Set;
 
 @Entity
-@Table(name = "user", catalog = "edsd", uniqueConstraints = 
+@Table(name = "user", catalog = "heroku_5889aeb3caa53dd", uniqueConstraints = 
 @UniqueConstraint(columnNames = {"user_id", "username", "email"}))
 public class User {
 

@@ -10,7 +10,6 @@ public class PrimesGrade {
 	private String classe;
 	private Date startDate;
 	private Date endDate;
-//	private String indemnite;
 	private String grade;
 	
 	
@@ -23,7 +22,6 @@ public class PrimesGrade {
 		this.classe = classe;
 		this.startDate = startDate;
 		this.endDate = endDate;
-//		this.indemnite = indemnite;
 		this.grade = grade;
 	}
 	
@@ -45,12 +43,7 @@ public class PrimesGrade {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-//	public String getIndemnite() {
-//		return indemnite;
-//	}
-//	public void setIndemnite(String indemnite) {
-//		this.indemnite = indemnite;
-//	}
+
 	public String getGrade() {
 		return grade;
 	}
@@ -63,7 +56,5 @@ public class PrimesGrade {
 		return "PrimesGrade [classe=" + classe + ", startDate=" + startDate + ", endDate=" + endDate + ", indemnite="
 				+ ", grade=" + grade + "]";
 	}
-	
-	
 
 }
