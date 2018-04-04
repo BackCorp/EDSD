@@ -41,7 +41,7 @@ CREATE TABLE `non_logement_edsd` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-ALTER TABLE `non_logement_edsd` AUTO_INCREMENT = 0;
+ALTER TABLE `heroku_e677632625f8d81`.`non_logement_edsd` AUTO_INCREMENT = 0;
 
 --
 -- Dumping data for table `non_logement_edsd`

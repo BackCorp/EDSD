@@ -33,7 +33,7 @@ CREATE TABLE `primes_liees_au_grade_ou_categorie` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-ALTER TABLE `primes_liees_au_grade_ou_categorie` AUTO_INCREMENT = 0;
+ALTER TABLE `heroku_e677632625f8d81`.`primes_liees_au_grade_ou_categorie` AUTO_INCREMENT = 0;
 --
 -- Dumping data for table `primes_liees_au_grade_ou_categorie`
 --
@@ -91,7 +91,7 @@ CREATE TABLE `primes_liees_aux_indices` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-ALTER TABLE `primes_liees_aux_indices` AUTO_INCREMENT = 0;
+ALTER TABLE `heroku_e677632625f8d81`.`primes_liees_aux_indices` AUTO_INCREMENT = 0;
 
 --
 -- Dumping data for table `primes_liees_aux_indices`

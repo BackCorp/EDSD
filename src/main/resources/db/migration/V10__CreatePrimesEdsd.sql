@@ -51,7 +51,7 @@ CREATE TABLE `primes_edsd` (
   CONSTRAINT `FKs4tpxsx2hhfos18dw6wmeor84` FOREIGN KEY (`requester_id`) REFERENCES `requester` (`requester_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-ALTER TABLE `primes_edsd` AUTO_INCREMENT = 0;
+ALTER TABLE `heroku_e677632625f8d81`.`primes_edsd` AUTO_INCREMENT = 0;
 
 /*!40101 SET character_set_client = @saved_cs_client */;
 

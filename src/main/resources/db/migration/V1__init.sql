@@ -18,7 +18,7 @@ CREATE TABLE `user` (
   UNIQUE KEY `UK_sb8bbouer5wak8vyiiy4pf2bx` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-ALTER TABLE `user` AUTO_INCREMENT = 0;
+ALTER TABLE `heroku_e677632625f8d81`.`user` AUTO_INCREMENT = 0;
 
 
 DROP TABLE IF EXISTS `role`;
@@ -30,7 +30,7 @@ CREATE TABLE `role` (
   UNIQUE KEY `UK_bjxn5ii7v7ygwx39et0wawu0q` (`role`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-ALTER TABLE `role` AUTO_INCREMENT = 0;
+ALTER TABLE `heroku_e677632625f8d81`.`role` AUTO_INCREMENT = 0;
 
 
 DROP TABLE IF EXISTS `user_role`;
@@ -43,6 +43,7 @@ CREATE TABLE `user_role` (
   CONSTRAINT `FKa68196081fvovjhkek5m97n3y` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+ALTER TABLE `heroku_e677632625f8d81`.`user` AUTO_INCREMENT = 0;
 
 
 DROP TABLE IF EXISTS `requester`;
@@ -77,5 +78,5 @@ CREATE TABLE `requester` (
   UNIQUE KEY `UKrvu1x64s164w06j7j6qectx5k` (`requester_id`,`account_number`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='This table describes whoever is submitting an EDSD request';
 
-ALTER TABLE `requester` AUTO_INCREMENT = 0;
+ALTER TABLE `heroku_e677632625f8d81`.`requester` AUTO_INCREMENT = 0;
 
