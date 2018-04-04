@@ -3,9 +3,10 @@ package com.edsd.Controllers;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,10 +15,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.edsd.domain.PlaceHolder;
+import com.edsd.model.PrimesEdsd;
 import com.edsd.model.Role;
 import com.edsd.model.User;
+import com.edsd.repository.NonLogementEdsdRepository;
+import com.edsd.repository.PrimesEdsdRepository;
+import com.edsd.repository.RappelsSalairesEdsdRepository;
 import com.edsd.repository.RolesRepository;
 import com.edsd.repository.UsersRepository;
+
 
 @PreAuthorize("hasAnyRole('ADMIN')")
 @RequestMapping("/api/agents")
@@ -28,10 +35,47 @@ public class AgentController {
 	private UsersRepository usersRepo;
 	@Autowired
 	private RolesRepository rolesRepo;
+	@Autowired
+	private PrimesEdsdRepository primesEdsdRepo;
+	@Autowired
+	private NonLogementEdsdRepository nonLogementEdsdRepo;
+	@Autowired
+	private RappelsSalairesEdsdRepository rappelsSalairesEdsdRepo;
 	
 	@GetMapping("")
 	public List<User> findAllAgents() {
-		return usersRepo.findAll();
+		return usersRepo.findAll().parallelStream().map(user -> {
+			user.setPassword("");
+			return user;
+		}).collect(Collectors.toList());
+	}
+	
+	@GetMapping("/primes")
+	public List<PlaceHolder> getAllPrimes() {
+		return primesEdsdRepo.findAll().parallelStream().map(primesEdsd -> {
+			return new PlaceHolder(
+					primesEdsd, primesEdsd.getCreatedBy().getUsername(), 
+					primesEdsd.getCreatedBy().getFirstName(), primesEdsd.getCreatedBy().getLastName());
+		}).collect(Collectors.toList());
+	}
+	
+	@GetMapping("/nonLogements")
+	public List<PlaceHolder> getAllNonLogements() {
+		return nonLogementEdsdRepo.findAll().parallelStream().map(nonLegementsEdsd -> {
+			return new PlaceHolder(
+				nonLegementsEdsd, nonLegementsEdsd.getCreatedBy().getUsername(), 
+				nonLegementsEdsd.getCreatedBy().getFirstName(), nonLegementsEdsd.getCreatedBy().getLastName());
+		}).collect(Collectors.toList());
+	}
+	
+	@GetMapping("/rappelsSalaires")
+	public List<PlaceHolder> getAllRappelsSalaires() {
+		return rappelsSalairesEdsdRepo.findAll().parallelStream().map(rappelsSalairesEdsd -> {
+			return new PlaceHolder(
+				rappelsSalairesEdsd, rappelsSalairesEdsd.getCreatedBy().getUsername(), 
+				rappelsSalairesEdsd.getCreatedBy().getFirstName(), 
+				rappelsSalairesEdsd.getCreatedBy().getLastName());
+		}).collect(Collectors.toList());
 	}
 	
 	@GetMapping("/search/{token}")
@@ -67,6 +111,21 @@ public class AgentController {
 		return null;
 	}
 	
+	@GetMapping("/reset/{username}")
+	public User findUsernameToBeReset(@PathVariable("username") String username) {
+		return findAgentByUsername(username);
+	}
+	
+	@PutMapping("/reset/{username}")
+	public User UpdateAgentPassword(@PathVariable("username") String username, @RequestBody User user) {
+		Optional<User> u = usersRepo.findByUsername(username); 
+		if(u.isPresent()) {
+			u.get().setPassword(user.getPassword());
+			return usersRepo.save(u.get());
+		}
+		return null;
+	}
+	
 	@PutMapping("/{username}")
 	public User UpdateAgentByUsername(@PathVariable("username") String username, @RequestBody User user) {
 		Optional<User> us = usersRepo.findByUsername(user.getUsername());
@@ -77,10 +136,14 @@ public class AgentController {
 				u.setPassword("");
 			} else if(!us.get().getActive() && user.getActive()) {
 				us.get().setActive(true);
+				us.get().getRoles().clear();
+				us.get().getRoles().add(rolesRepo.findByRoleIgnoreCase("AGENT"));
 				u = usersRepo.save(us.get());
 				u.setPassword("");
 			} else if(us.get().getActive() && !user.getActive()) {
 				us.get().setActive(false);
+				us.get().getRoles().clear();
+				us.get().getRoles().add(rolesRepo.findByRoleIgnoreCase("NO_ROLE"));
 				u = usersRepo.save(us.get());
 				u.setPassword("");
 			}
@@ -124,11 +187,6 @@ public class AgentController {
 			roles.add(rolesRepo.findByRoleIgnoreCase("AGENT"));
 			userToBeUpdated.setRoles(roles);
 		}
-		return userToBeUpdated;
-	}
-	
-	private User getUpdatedDisabledUser(User userToBeUpdated, User userModel) {
-		userToBeUpdated.setActive(userModel.getActive());
 		return userToBeUpdated;
 	}
 }

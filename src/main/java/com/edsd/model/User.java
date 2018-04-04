@@ -4,8 +4,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.Set;
 
@@ -14,7 +17,7 @@ import java.util.Set;
 @UniqueConstraint(columnNames = {"user_id", "username", "email"}))
 public class User {
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
     @NotNull(message="User ID is required")
@@ -49,18 +52,30 @@ public class User {
     @Size(min=1, max=100)
     private String email;
     
-   // @NotBlank
-    @Column(name = "active", columnDefinition= "BOOLEAN DEFAULT true") // "TINYINT(1) default 1")
-    //@Type(type = "org.hibernate.type.NumericBooleanType")
+    @Column(name = "active", columnDefinition= "BOOLEAN DEFAULT true") 
     @NotNull(message="User must be Enabled or Disabled")
     private boolean active;
     
+    @NotNull(message="User must have a role. It should be either ADMIN, AGENT or NO_ROLE")
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"), 
     	inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
     private Set<Role> roles;
 
-    public User() {
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="createdBy", orphanRemoval=true)
+	@JsonManagedReference
+    private Set<PrimesEdsd> primesEdsd;
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="createdBy", orphanRemoval=true)
+	@JsonManagedReference
+    private Set<NonLogementEdsd> nonLogementEdsd;
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="createdBy", orphanRemoval=true)
+	@JsonManagedReference
+    private Set<RappelsSalairesEdsd> rappelsSalairesEdsd;
+    
+
+	public User() {
     }
 
     public User(User user) {
@@ -73,7 +88,6 @@ public class User {
     	this.email = user.getEmail();
         this.active = user.getActive();        
         this.roles = user.getRoles();
-        user.getRoles().forEach(r -> System.out.println(r.getRole()) );
     }
     
 
@@ -122,7 +136,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = (new BCryptPasswordEncoder()).encode(password);
     }
         
     public String getEmail() {
@@ -148,6 +162,30 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public Set<PrimesEdsd> getPrimesEdsd() {
+		return primesEdsd;
+	}
+
+	public void setPrimesEdsd(Set<PrimesEdsd> primesEdsd) {
+		this.primesEdsd = primesEdsd;
+	}
+	
+	public Set<NonLogementEdsd> getNonLogementEdsd() {
+		return nonLogementEdsd;
+	}
+
+	public void setNonLogementEdsd(Set<NonLogementEdsd> nonLogementEdsd) {
+		this.nonLogementEdsd = nonLogementEdsd;
+	}
+
+	public Set<RappelsSalairesEdsd> getRappelsSalairesEdsd() {
+		return rappelsSalairesEdsd;
+	}
+
+	public void setRappelsSalaires(Set<RappelsSalairesEdsd> rappelsSalairesEdsd) {
+		this.rappelsSalairesEdsd = rappelsSalairesEdsd;
+	}
 
 	@Override
 	public String toString() {

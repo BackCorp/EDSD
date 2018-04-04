@@ -49,7 +49,7 @@ INSERT INTO `edsd`.`user`
 `email`,
 `active`)
 VALUES
-('Biya','Paul','QR345ST','$2a$10$AMGQA/jjZO9cftUdfBRRxuI1SX9CKZFS7ZaI.uKjisXLuhfzn0A5e','pBiya@edsd.com',1);
+('Biya','Paul','QR345ST','$2a$10$AMGQA/jjZO9cftUdfBRRxuI1SX9CKZFS7ZaI.uKjisXLuhfzn0A5e','pBiya@edsd.com',0);
 
 INSERT INTO `edsd`.`user`
 (`last_name`,
