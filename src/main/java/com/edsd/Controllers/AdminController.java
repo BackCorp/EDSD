@@ -33,7 +33,7 @@ public class AdminController {
 	@Autowired
 	private RappelsSalairesEdsdRepository rappelsSalairesRepo;
 	
-	@GetMapping("/")
+	@GetMapping("")
     public String AdminMainPage() {
         return "Admin page";
     }
@@ -50,5 +50,4 @@ public class AdminController {
 		return statsService;
 	}
 		
-	
 }

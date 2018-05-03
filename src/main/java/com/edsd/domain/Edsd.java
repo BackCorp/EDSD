@@ -88,8 +88,10 @@ public class Edsd {
 	public PrimesEdsd createPrimesEdsd(User createdBy, Requester requester, PrimesIndices primesIndices, 
 			PrimesGrade primesGrade, double retenues) {
 		
-		if(primesEdsdRepo.findByStartDateAndEndDateAndBelongsToRequester(
-				primesGrade.getStartDate(), primesGrade.getEndDate(), requester).isEmpty()) {
+		if(primesEdsdRepo.findByStartDateBetweenAndBelongsToRequester(
+				primesGrade.getStartDate(), primesGrade.getEndDate(), requester).isEmpty() && 
+		   primesEdsdRepo.findByEndDateBetweenAndBelongsToRequester(
+				   primesGrade.getStartDate(), primesGrade.getEndDate(), requester).isEmpty()) {
 			
 			double computedPrimes = getComputedPrimes(primesIndices, primesGrade, retenues);
 			PrimesEdsd primesEdsd = new PrimesEdsd(
@@ -119,7 +121,7 @@ public class Edsd {
 				" to " + primesGrade.getEndDate() + " already.");
 		}
 	}
-
+	
 	private double getComputedNonLogement(NonLogement nonLogement) {
 		return nonLogement.getSalaireDeBase() * getNumberOfMonths(nonLogement.getStartDate(), nonLogement.getEndDate()) * (20/100.0);
 	}
