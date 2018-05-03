@@ -39,16 +39,16 @@ public class Edsd {
 	@Autowired
 	private RappelsSalairesEdsdRepository rappelsSalairesEdsdRepo;
 	
-	
 	private double totalPrimesIndices;
 
-	private final double TAX_PERCENTAGE = 5.28/100;
-	private final int HOUR = 3600000;
+	private final double TAX_PRIMES = 5.28/100;
+	private final double NON_LOGMNT_PERCENT = 20/100.0;
+	private final double TRENTE_JOURS = 1000*3600*24*30.0;
 	
 	public Edsd() {}
 	
 	private double getNumberOfMonths(Date startDate, Date endDate) {
-		return (endDate.getTime() - startDate.getTime() + HOUR)/(3600*1000*24*30.0);
+		return (endDate.getTime() - startDate.getTime())/(TRENTE_JOURS);
 	}
 	
 	private double getPrimesGradeTecniciteMontant(PrimesGrade primesGrade) {
@@ -64,11 +64,11 @@ public class Edsd {
 	}
 
 	private double getComputedPrimesGrade(PrimesGrade primesGrade) {		
-		return this.getPrimesGradeTecniciteMontant(primesGrade) * (1 - TAX_PERCENTAGE) * this.getNumberOfMonths(primesGrade.getStartDate(), primesGrade.getEndDate());
+		return this.getPrimesGradeTecniciteMontant(primesGrade) * (1 - TAX_PRIMES) * this.getNumberOfMonths(primesGrade.getStartDate(), primesGrade.getEndDate());
 	}
 	
 	private double getComputedPrimesIndices(PrimesIndices primesIndices) {
-		return this.getComputedPrimesIndicesMontant(primesIndices) * (1 - TAX_PERCENTAGE) * this.getNumberOfMonths(primesIndices.getStartDate(), primesIndices.getEndDate());
+		return this.getComputedPrimesIndicesMontant(primesIndices) * (1 - TAX_PRIMES) * this.getNumberOfMonths(primesIndices.getStartDate(), primesIndices.getEndDate());
 	}
 
 	private double getComputedPrimes(PrimesIndices primesIndices, PrimesGrade primesGrade, double retenues) {
@@ -123,7 +123,7 @@ public class Edsd {
 	}
 	
 	private double getComputedNonLogement(NonLogement nonLogement) {
-		return nonLogement.getSalaireDeBase() * getNumberOfMonths(nonLogement.getStartDate(), nonLogement.getEndDate()) * (20/100.0);
+		return nonLogement.getSalaireDeBase() * getNumberOfMonths(nonLogement.getStartDate(), nonLogement.getEndDate()) * (NON_LOGMNT_PERCENT);
 	}
 	
 	public NonLogementEdsd createNonLogement(User createdBy, Requester requester, NonLogement nonLogement) {
