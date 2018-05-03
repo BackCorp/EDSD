@@ -127,8 +127,12 @@ public class Edsd {
 	}
 	
 	public NonLogementEdsd createNonLogement(User createdBy, Requester requester, NonLogement nonLogement) {
-		if(nonLogementEdsdRepo.findByStartDateAndEndDateAndBelongsToRequester(
-				nonLogement.getStartDate(), nonLogement.getEndDate(), requester).isEmpty()) {
+		
+		if(nonLogementEdsdRepo.findByStartDateBetweenAndBelongsToRequester(
+				nonLogement.getStartDate(), nonLogement.getEndDate(), requester).isEmpty() && 
+			nonLogementEdsdRepo.findByEndDateBetweenAndBelongsToRequester(
+					nonLogement.getStartDate(), nonLogement.getEndDate(), requester).isEmpty()) {
+			
 			double computedNonLogement = getComputedNonLogement(nonLogement);
 			NonLogementEdsd nonLogementEdsd = new NonLogementEdsd(
 				createdBy, 
@@ -154,8 +158,12 @@ public class Edsd {
 	}
 	
 	public RappelsSalairesEdsd createRappelsSalaires(User createdBy, Requester requester, RappelsSalaires rappelsSalaires) {
-		if(rappelsSalairesEdsdRepo.findByStartDateAndEndDateAndBelongsToRequester(
-				rappelsSalaires.getStartDate(), rappelsSalaires.getEndDate(), requester).isEmpty()) {
+		
+		if(rappelsSalairesEdsdRepo.findByStartDateBetweenAndBelongsToRequester(
+				rappelsSalaires.getStartDate(), rappelsSalaires.getEndDate(), requester).isEmpty() && 
+			rappelsSalairesEdsdRepo.findByEndDateBetweenAndBelongsToRequester(
+					rappelsSalaires.getStartDate(), rappelsSalaires.getEndDate(), requester).isEmpty()) {
+			
 			double computedRappelsSalaires = getComputedRappelsSalaires(rappelsSalaires);
 			RappelsSalairesEdsd rappelsSalairesEdsd = new RappelsSalairesEdsd(
 				rappelsSalaires.getStartDate(), 

@@ -18,4 +18,8 @@ public interface RappelsSalairesEdsdRepository extends JpaRepository<RappelsSala
 	
 	public List<RappelsSalairesEdsd> findByStartDateAndEndDateAndBelongsToRequester(Date startDate, Date endDate, Requester belongsToRequester);
 	
+	public List<RappelsSalairesEdsd> findByStartDateBetweenAndBelongsToRequester(Date startDate, Date endDate, Requester belongsToRequester);
+	
+	public List<RappelsSalairesEdsd> findByEndDateBetweenAndBelongsToRequester(Date startDate, Date endDate, Requester belongsToRequester);
+	
 }

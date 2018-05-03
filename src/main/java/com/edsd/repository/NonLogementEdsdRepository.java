@@ -15,6 +15,8 @@ public interface NonLogementEdsdRepository extends JpaRepository<NonLogementEdsd
 	@Transactional(readOnly = true)
 	public List<NonLogementEdsd> findByBelongsToRequester(Requester belongsToRequester);
 	
-	public List<NonLogementEdsd> findByStartDateAndEndDateAndBelongsToRequester(Date startDate, Date endDate, Requester belongsToRequester);
+	public List<NonLogementEdsd> findByStartDateBetweenAndBelongsToRequester(Date startDate, Date endDate, Requester belongsToRequester);
+	
+	public List<NonLogementEdsd> findByEndDateBetweenAndBelongsToRequester(Date startDate, Date endDate, Requester belongsToRequester);
 	
 }
